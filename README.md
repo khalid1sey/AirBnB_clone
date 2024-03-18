@@ -224,8 +224,8 @@ To use the command interpreter, follow the instructions below.
   (hbnb) update User <user_id> email "example@example.com"
   ```
 
-# 4 Authors
-
+# 5 Authors
+This project airBnB-clone is made as Alx cohort 21 Team project.
 <table>
 <tr>
     <th>Name</th>
