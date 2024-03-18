@@ -3,7 +3,7 @@
 
 ## Table of Contents
 - [AirBnB Clone Project Tasks](#airbnb-clone-project-tasks)
-- [Introduction] (#0.Introduction)
+- [Introduction] (#Introduction)
 - [Concepts] (#1 Concepts on this topic)
 - [Steps] (#2.Steps)
 - [Guidlines] (#3.Guidlines)
