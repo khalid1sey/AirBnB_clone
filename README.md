@@ -5,8 +5,9 @@
 - [Introduction](#0-Introduction)
 - [Concepts](#1-Concepts-on-this-topic)
 - [Requirements](#2-Requirements)
-- [Usage](#3-Usage)
-- [Authors](#4-Authors)
+- [Testing](#3-Testing)
+- [Usage](#4-Usage)
+- [Authors](#5-Authors)
 
 # 0 Introduction
 
@@ -34,7 +35,7 @@ Do you remember the Shell? It’s exactly the same but limited to a specific use
 
 # 1 Concepts on this topic
 
-## 1. Creating a Python Package
+### 1. Creating a Python Package
 To create a Python package, follow these steps:
 
 1. Organize your code into a directory structure.
@@ -42,7 +43,7 @@ To create a Python package, follow these steps:
 3. Include an `__init__.py` file in each directory to mark it as a Python package.
 4. Optionally, provide a `README.md` file to document your package.
 
-## 2. Implementing a Command Interpreter using the `cmd` Module
+### 2. Implementing a Command Interpreter using the `cmd` Module
 The `cmd` module in Python provides a framework for creating command-line interpreters. To implement a command interpreter:
 
 1. Import the `cmd` module.
@@ -50,30 +51,30 @@ The `cmd` module in Python provides a framework for creating command-line interp
 3. Define methods in the class to handle commands.
 4. Use the `cmdloop()` method to start the command loop.
 
-## 3. Unit Testing in Large Projects
+### 3. Unit Testing in Large Projects
 Unit testing is the process of verifying that individual units of code work as expected. In large projects, it is essential to ensure the stability and correctness of the codebase. To implement unit testing:
 
 1. Choose a testing framework such as `unittest` or `pytest`.
 2. Write test cases for each unit of code.
 3. Execute the tests using the testing framework.
 
-## 4. Serialization and Deserialization of a Class
+### 4. Serialization and Deserialization of a Class
 Serialization is the process of converting an object into a format suitable for storage or transmission. Deserialization is the reverse process of reconstructing an object from its serialized form. To serialize and deserialize a class, you can use the `pickle` module in Python.
 
-## 5. Reading and Writing JSON Files
+### 5. Reading and Writing JSON Files
 JSON (JavaScript Object Notation) is a widely used data interchange format. To read and write JSON files in Python:
 
 1. Import the `json` module.
 2. Use the `json.load()` function to read a JSON file.
 3. Use the `json.dump()` function to write data to a JSON file.
 
-## 6. Managing Datetime
+### 6. Managing Datetime
 Python's `datetime` module provides classes for working with dates and times. You can use it to perform various operations, such as creating, manipulating, and formatting dates and times.
 
-## 7. Understanding UUIDs
+### 7. Understanding UUIDs
 UUID (Universally Unique Identifier) is a 128-bit identifier that is guaranteed to be unique across all devices and time. It is often used to identify resources in distributed systems. Python provides the `uuid` module to generate and manipulate UUIDs.
 
-## 8. Working with `*args` in Python
+### 8. Working with `*args` in Python
 In Python, `*args` is used to pass a variable number of positional arguments to a function. It allows you to pass any number of arguments to a function without explicitly specifying them.
 
 To use `*args`:
@@ -81,7 +82,7 @@ To use `*args`:
 1. Define a function with `*args` in its parameter list.
 2. Access the arguments inside the function using the `args` variable, which is a tuple.
 
-## 9. Utilizing `**kwargs` in Python
+### 9. Utilizing `**kwargs` in Python
 Similar to `*args`, `**kwargs` allows you to pass a variable number of keyword arguments to a function. It enables you to pass named arguments of any number without explicitly specifying them.
 
 To use `**kwargs`:
@@ -89,7 +90,7 @@ To use `**kwargs`:
 1. Define a function with `**kwargs` in its parameter list.
 2. Access the arguments inside the function using the `kwargs` variable, which is a dictionary.
 
-## 10. Handling Named Arguments in a Function
+### 10. Handling Named Arguments in a Function
 Python allows you to define functions with named arguments, which provide more clarity and flexibility when calling functions. To handle named arguments in a function:
 
 1. Define a function with named arguments.
@@ -128,6 +129,16 @@ Step 5: Create unit tests
 By following these steps, you will build the foundation for your AirBnB clone project. Remember to regularly run your unit tests to ensure all classes and functionalities are working correctly.
 
 
+### Documentation Guidelines
+
+- Modules: All your modules should have documentation. You can use the command `python3 -c 'print(__import__("my_module").__doc__)'` to verify the presence of documentation.
+- Classes: All your classes should have documentation. You can use the command `python3 -c 'print(__import__("my_module").MyClass.__doc__)'` to verify the presence of documentation.
+- Functions (Inside and Outside a Class): All your functions should have documentation. You can use the commands `python3 -c 'print(__import__("my_module").my_function.__doc__)'` and `python3 -c 'print(__import__("my_module").MyClass.my_function.__doc__)'` to verify the presence of documentation.
+
+We strongly encourage collaboration on test cases to ensure comprehensive coverage, including edge cases. By following these guidelines, you can create effective unit tests for your Python scripts.
+
+
+# 3 Testing
 ## Tests
 ### Python Unit Tests
 
@@ -147,18 +158,9 @@ This repository includes unit tests for Python scripts. Please ensure that you f
 - Individual Test Execution: You can also test individual files using the command `python3 -m unittest tests/test_models/test_base_model.py`.
 - Documentation: All modules, classes, and functions should have appropriate documentation.
 
-### Documentation Guidelines
-
-- Modules: All your modules should have documentation. You can use the command `python3 -c 'print(__import__("my_module").__doc__)'` to verify the presence of documentation.
-- Classes: All your classes should have documentation. You can use the command `python3 -c 'print(__import__("my_module").MyClass.__doc__)'` to verify the presence of documentation.
-- Functions (Inside and Outside a Class): All your functions should have documentation. You can use the commands `python3 -c 'print(__import__("my_module").my_function.__doc__)'` and `python3 -c 'print(__import__("my_module").MyClass.my_function.__doc__)'` to verify the presence of documentation.
-
-We strongly encourage collaboration on test cases to ensure comprehensive coverage, including edge cases. By following these guidelines, you can create effective unit tests for your Python scripts.
 
 
-
-
-# 3 Usage
+# 4 Usage
 
 To use the command interpreter, follow the instructions below.
 
@@ -226,8 +228,8 @@ To use the command interpreter, follow the instructions below.
 
 <table>
 <tr>
-    <th></th>
-    <th></th>
+    <th>Name</th>
+    <th>Email</th>
 </tr>
 <tr>
     <td>Khalid Sinteayhu</td>
