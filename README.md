@@ -2,7 +2,7 @@
 
 
 ## Table of Contents
-- [0Introduction](#0-Introduction)
+- [Introduction](#0-Introduction)
 - [Concepts](#1-Concepts-on-this-topic)
 - [Requirements](#2-Requirements)
 - [Usage](#3-Usage)
@@ -32,7 +32,7 @@ Do you remember the Shell? It’s exactly the same but limited to a specific use
 
 
 
-# 1 . Concepts on this topic
+# 1 Concepts on this topic
 
 ## 1. Creating a Python Package
 To create a Python package, follow these steps:
@@ -96,7 +96,7 @@ Python allows you to define functions with named arguments, which provide more c
 2. Call the function and pass arguments using the `name=value` syntax.
 
 ---
-# 2. Requirements
+# 2 Requirements
 
 Step 1: Create the BaseModel class
 - Create a file named `base_model.py` in the `models` directory.
@@ -158,7 +158,7 @@ We strongly encourage collaboration on test cases to ensure comprehensive covera
 
 
 
-# 3.Usage
+# 3 Usage
 
 To use the command interpreter, follow the instructions below.
 
@@ -222,7 +222,7 @@ To use the command interpreter, follow the instructions below.
   (hbnb) update User <user_id> email "example@example.com"
   ```
 
-# 4.Authors
+# 4 Authors
 
 <table>
 <tr>
