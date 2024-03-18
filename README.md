@@ -5,8 +5,8 @@
 - [Introduction](#0-Introduction)
 - [Concepts](#1-Concepts-on-this-topic)
 - [Requirements](#2-Requirements)
-- [Structure](#3-Structure)
-- [Testing](#4-Testing)
+- [Testing](#3-Testing)
+- [Structure](#4-Structure)
 - [Usage](#5-Usage)
 - [Authors](#6-Authors)
 
