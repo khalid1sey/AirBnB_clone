@@ -1,11 +1,15 @@
 # 0x00. AirBnB clone - The console
-<img src="hbnb.png" style="background-color: #fff; margin: 0 auto; border-radius: 20px;">
 
-### pages
-3. Guidlines
-4. Usage
-5. Concepts in this topic
 
+## Table of Contents
+- [AirBnB Clone Project Tasks](#airbnb-clone-project-tasks)
+- [Introduction] (# 0. Introduction)
+- [Concepts] (# 1. Concepts on this topic)
+- [Steps] (# 2. Steps)
+- [Guidlines] (# 3.Guidlines)
+
+
+# 0. Introduction
 ## First step: Write a command interpreter to manage your AirBnB objects.
 This is the first step towards building your first full web application: the AirBnB clone. This first step is very important because you will use what you build during this project with all other following projects: HTML/CSS templating, database storage, API, front-end integration…
 
@@ -13,7 +17,7 @@ Each task is linked and will help you to:
 
 * put in place a parent class (called BaseModel) to take care of the initialization, serialization and deserialization of your future instances
 * create a simple flow of serialization/deserialization: Instance <-> Dictionary <-> JSON string <-> file
-* create all classes used for irBnB (User, State, City, Place…) that inherit from BaseModel22 =
+* create all classes used for AirBnB (User, State, City, Place…) that inherit from BaseModel
 * create the first abstracted storage engine of the project: File storage.
 * create all unittests to validate all our classes and storage engine
 
@@ -26,87 +30,9 @@ Do you remember the Shell? It’s exactly the same but limited to a specific use
 * Update attributes of an object
 * Destroy an object
 
-# 3.Guidelines
-## Python Scripts
-### Guidelines
-- Editors: You can use any of the following editors: vi, vim, emacs.
-- Interpreter: All scripts will be interpreted/compiled on Ubuntu 20.04 LTS using Python 3 (version 3.8.5).
-- File Format: Ensure that all your files end with a new line.
-- First Line: The first line of all your files should be exactly `#!/usr/bin/python3`.
-- README.md: Include a README.md file at the root of the project folder. This is mandatory.
-- Code Style: Your code should adhere to the pycodestyle guidelines (version 2.8.*).
-- Executability: All your files must be executable.
-- File Length: The length of your files will be tested using `wc`.
-- Documentation: All modules, classes, and functions should have appropriate documentation.
 
-### Documentation Guidelines
 
-- Modules: All your modules should have documentation. You can use the command `python3 -c 'print(__import__("my_module").__doc__)'` to verify the presence of documentation.
-- Classes: All your classes should have documentation. You can use the command `python3 -c 'print(__import__("my_module").MyClass.__doc__)'` to verify the presence of documentation.
-- Functions (Inside and Outside a Class): All your functions should have documentation. You can use the commands `python3 -c 'print(__import__("my_module").my_function.__doc__)'` and `python3 -c 'print(__import__("my_module").MyClass.my_function.__doc__)'` to verify the presence of documentation.
-- Documentation Format: Documentation should be a real sentence that explains the purpose of the module, class, or method. The length of the documentation will be verified.
-
-## Unit Tests
-### Guidlines
-- Editors: You can use any of the following editors: vi, vim, emacs.
-- File Format: Ensure that all your files end with a new line.
-- Test Folder: Place all your test files inside a folder named `tests`.
-- Unittest Module: Use the `unittest` module for writing your unit tests.
-- Test File Format: All your test files should have the `.py` extension.
-- Test File and Folder Naming: All your test files and folders should start with `test_`.
-- File Organization: Organize your test files in the `tests` folder in the same structure as your project files.
-  - For example, if your project file is `models/base_model.py`, the corresponding unit test should be located at `tests/test_models/test_base_model.py`.
-- Test Execution: Execute all your tests using the command `python3 -m unittest discover tests`.
-- Individual Test Execution: You can also test individual files using the command `python3 -m unittest tests/test_models/test_base_model.py`.
-- Documentation: All modules, classes, and functions should have appropriate documentation.
-
-### Documentation Guidelines
-
-- Modules: All your modules should have documentation. You can use the command `python3 -c 'print(__import__("my_module").__doc__)'` to verify the presence of documentation.
-- Classes: All your classes should have documentation. You can use the command `python3 -c 'print(__import__("my_module").MyClass.__doc__)'` to verify the presence of documentation.
-- Functions (Inside and Outside a Class): All your functions should have documentation. You can use the commands
-
-# 4.Usage
-Your shell should work like this in interactive mode:
-
-<code> $ ./console.py <br>
-(hbnb) <br> 
-help <br>
-</code>
-Documented commands (type help <topic>):
-========================================<br>
-<code>
-EOF  help  quit<br>
-
-(hbnb) <br>
-(hbnb) <br>
-(hbnb) quit <br>
-$ <br>
-</code>
-But also in non-interactive mode: (like the Shell project in C)
-
-<code>$ echo "help" | ./console.py <br>
-(hbnb) <br></code>
-
-Documented commands (type help <topic>):
-========================================
-EOF  help  quit
-(hbnb) 
-$
-$ cat test_help
-help
-$
-$ cat test_help | ./console.py
-(hbnb)
-
-Documented commands (type help <topic>):
-========================================
-EOF  help  quit
-(hbnb) 
-$
-</code>
-
-# 5. Concepts in this topic
+# 1 . Concepts on this topic
 
 ## 1. Creating a Python Package
 To create a Python package, follow these steps:
@@ -168,3 +94,169 @@ Python allows you to define functions with named arguments, which provide more c
 
 1. Define a function with named arguments.
 2. Call the function and pass arguments using the `name=value` syntax.
+
+---
+# 2. Steps
+
+Step 1: Create the BaseModel class
+- Create a file named `base_model.py` in the `models` directory.
+- Define a class called `BaseModel` that will serve as the parent class for all other classes in the project.
+- Implement the initialization, serialization, and deserialization methods in the `BaseModel` class.
+- Include a `to_dict()` method that converts an instance into a dictionary representation.
+- Include a `save()` method that serializes the instance and saves it to a JSON file.
+
+Step 2: Implement serialization and deserialization flow
+- Create a `FileStorage` class in the `models/engine` directory.
+- Implement methods in the `FileStorage` class to handle serialization and deserialization of instances.
+- Use the `json` module to convert instances to JSON strings and vice versa.
+- Implement methods to save instances to a JSON file and load instances from the file.
+
+Step 3: Create classes for AirBnB entities
+- Create individual files for each class (e.g., `user.py`, `state.py`, `city.py`, `place.py`) in the `models` directory.
+- Define classes for `User`, `State`, `City`, `Place`, and any other entities required for the AirBnB clone.
+- Inherit the `BaseModel` class in each of these classes.
+
+Step 4: Implement the FileStorage engine
+- Update the `__init__.py` file in the `models` directory to import the `FileStorage` class.
+- Implement a global variable `storage` that is an instance of `FileStorage`, allowing access to the file storage engine throughout the project.
+
+Step 5: Create unit tests
+- Create a `tests` directory in the root of your project.
+- Write unit tests for each class you've implemented, ensuring that they function as expected.
+- Include tests for serialization, deserialization, saving, and loading of instances using the `FileStorage` engine.
+
+By following these steps, you will build the foundation for your AirBnB clone project. Remember to regularly run your unit tests to ensure all classes and functionalities are working correctly.
+
+
+# 3.Guidlines
+# Python Unit Tests
+
+This repository includes unit tests for Python scripts. Please ensure that you follow the guidelines mentioned below when creating and organizing your unit tests.
+
+## Guidelines
+
+- Editors: You can use any of the following editors: vi, vim, emacs.
+- File Format: Ensure that all your files end with a new line.
+- Test Folder: Place all your test files inside a folder named `tests`.
+- Unittest Module: Use the `unittest` module for writing your unit tests.
+- Test File Format: All your test files should have the `.py` extension.
+- Test File and Folder Naming: All your test files and folders should start with `test_`.
+- File Organization: Organize your test files in the `tests` folder in the same structure as your project files.
+  - For example, if your project file is `models/base_model.py`, the corresponding unit test should be located at `tests/test_models/test_base_model.py`.
+- Test Execution: Execute all your tests using the command `python3 -m unittest discover tests`.
+- Individual Test Execution: You can also test individual files using the command `python3 -m unittest tests/test_models/test_base_model.py`.
+- Documentation: All modules, classes, and functions should have appropriate documentation.
+
+## Documentation Guidelines
+
+- Modules: All your modules should have documentation. You can use the command `python3 -c 'print(__import__("my_module").__doc__)'` to verify the presence of documentation.
+- Classes: All your classes should have documentation. You can use the command `python3 -c 'print(__import__("my_module").MyClass.__doc__)'` to verify the presence of documentation.
+- Functions (Inside and Outside a Class): All your functions should have documentation. You can use the commands `python3 -c 'print(__import__("my_module").my_function.__doc__)'` and `python3 -c 'print(__import__("my_module").MyClass.my_function.__doc__)'` to verify the presence of documentation.
+
+We strongly encourage collaboration on test cases to ensure comprehensive coverage, including edge cases. By following these guidelines, you can create effective unit tests for your Python scripts.
+
+# Python Unit Tests
+
+This repository includes unit tests for Python scripts. Please ensure that you follow the guidelines mentioned below when creating and organizing your unit tests.
+
+## Guidelines
+
+- Editors: You can use any of the following editors: vi, vim, emacs.
+- File Format: Ensure that all your files end with a new line.
+- Test Folder: Place all your test files inside a folder named `tests`.
+- Unittest Module: Use the `unittest` module for writing your unit tests.
+- Test File Format: All your test files should have the `.py` extension.
+- Test File and Folder Naming: All your test files and folders should start with `test_`.
+- File Organization: Organize your test files in the `tests` folder in the same structure as your project files.
+  - For example, if your project file is `models/base_model.py`, the corresponding unit test should be located at `tests/test_models/test_base_model.py`.
+- Test Execution: Execute all your tests using the command `python3 -m unittest discover tests`.
+- Individual Test Execution: You can also test individual files using the command `python3 -m unittest tests/test_models/test_base_model.py`.
+- Documentation: All modules, classes, and functions should have appropriate documentation.
+
+## Documentation Guidelines
+
+- Modules: All your modules should have documentation. You can use the command `python3 -c 'print(__import__("my_module").__doc__)'` to verify the presence of documentation.
+- Classes: All your classes should have documentation. You can use the command `python3 -c 'print(__import__("my_module").MyClass.__doc__)'` to verify the presence of documentation.
+- Functions (Inside and Outside a Class): All your functions should have documentation. You can use the commands `python3 -c 'print(__import__("my_module").my_function.__doc__)'` and `python3 -c 'print(__import__("my_module").MyClass.my_function.__doc__)'` to verify the presence of documentation.
+
+We strongly encourage collaboration on test cases to ensure comprehensive coverage, including edge cases. By following these guidelines, you can create effective unit tests for your Python scripts.
+
+
+# 2.Getting Started
+
+To use the command interpreter, follow the instructions below.
+
+### Prerequisites
+
+- Python 3.x
+
+### Installation
+
+1. Clone the repository:
+
+   ```shell
+   $ git clone https://github.com/your-username/airbnb-clone.git
+   $ cd airbnb-clone
+   ```
+
+2. Create a virtual environment (optional but recommended):
+
+   ```shell
+   $ python3 -m venv venv
+   $ source venv/bin/activate
+   ```
+
+3. Install the dependencies:
+
+   ```shell
+   $ pip install -r requirements.txt
+   ```
+
+### Usage
+
+1. Run the command interpreter:
+
+   ```shell
+   $ python console.py
+   ```
+
+2. Enter commands at the prompt `(hbnb)`. Available commands:
+
+   - **create**: Creates a new instance of BaseModel, saves it to the JSON file, and prints the ID. Usage: `create <class name>`.
+   - **show**: Prints the string representation of an instance based on the class name and ID. Usage: `show <class name> <id>`.
+   - **destroy**: Deletes an instance based on the class name and ID. Usage: `destroy <class name> <id>`.
+   - **all**: Prints the string representation of all instances based on the class name. Usage: `all [class name]`.
+   - **update**: Updates an instance based on the class name and ID by adding or updating an attribute. Usage: `update <class name> <id> <attribute name> "<attribute value>"`.
+   - **quit**: Exits the command interpreter.
+
+### Examples
+
+- Create a new User:
+
+  ```shell
+  (hbnb) create User
+  ```
+
+- Show a User instance:
+
+  ```shell
+  (hbnb) show User <user_id>
+  ```
+
+- Delete a User instance:
+
+  ```shell
+  (hbnb) destroy User <user_id>
+  ```
+
+- Show all instances of a class:
+
+  ```shell
+  (hbnb) all User
+  ```
+
+- Update an attribute of a User instance:
+
+  ```shell
+  (hbnb) update User <user_id> email "example@example.com"
+  ```
