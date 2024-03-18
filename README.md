@@ -4,12 +4,12 @@
 ## Table of Contents
 - [AirBnB Clone Project Tasks](#airbnb-clone-project-tasks)
 - [0 Introduction](#0-Introduction)
-- [Concepts] (#1 Concepts on this topic)
-- [Steps] (#2.Steps)
-- [Guidlines] (#3.Guidlines)
-
+- [Concepts](#1-Concepts-on-this-topic)
+- [Steps](#2-Steps)
+- [Guidlines](#3-Guidlines)
 
 # 0 Introduction
+
 ## First step: Write a command interpreter to manage your AirBnB objects.
 This is the first step towards building your first full web application: the AirBnB clone. This first step is very important because you will use what you build during this project with all other following projects: HTML/CSS templating, database storage, API, front-end integration…
 
