@@ -5,9 +5,10 @@
 - [Introduction](#0-Introduction)
 - [Concepts](#1-Concepts-on-this-topic)
 - [Requirements](#2-Requirements)
-- [Testing](#3-Testing)
-- [Usage](#4-Usage)
-- [Authors](#5-Authors)
+- [Structure](#3-Structure)
+- [Testing](#4-Testing)
+- [Usage](#5-Usage)
+- [Authors](#6-Authors)
 
 # 0 Introduction
 
@@ -158,9 +159,29 @@ This repository includes unit tests for Python scripts. Please ensure that you f
 - Individual Test Execution: You can also test individual files using the command `python3 -m unittest tests/test_models/test_base_model.py`.
 - Documentation: All modules, classes, and functions should have appropriate documentation.
 
-
-
-# 4 Usage
+# Structure
+```
+|__models_____engine
+|       |          |____init__.py
+|       |          |____file_storage.py
+|       |____init__.py
+|       |____amenity.py
+|       |____base_model.py
+|       |____city.py
+|       |____place.py
+|       |____review.py
+|       |____state.py
+|       |____user.py
+|
+|_tests__
+|        |__test_models_test_base_model.py
+|
+|_console.py_
+|_file.json
+|_authors
+|_README.md
+```
+# 5 Usage
 
 To use the command interpreter, follow the instructions below.
 
@@ -224,7 +245,7 @@ To use the command interpreter, follow the instructions below.
   (hbnb) update User <user_id> email "example@example.com"
   ```
 
-# 5 Authors
+# 6 Authors
 This project airBnB-clone is made as Alx cohort 21 Team project.
 <table>
 <tr>
