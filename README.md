@@ -2,11 +2,11 @@
 
 
 ## Table of Contents
-- [AirBnB Clone Project Tasks](#airbnb-clone-project-tasks)
-- [0 Introduction](#0-Introduction)
+- [0Introduction](#0-Introduction)
 - [Concepts](#1-Concepts-on-this-topic)
-- [Steps](#2-Steps)
-- [Guidlines](#3-Guidlines)
+- [Requirements](#2-Requirements)
+- [Usage](#3-Usage)
+- [Authors](#4-Authors)
 
 # 0 Introduction
 
@@ -96,7 +96,7 @@ Python allows you to define functions with named arguments, which provide more c
 2. Call the function and pass arguments using the `name=value` syntax.
 
 ---
-# 2. Steps
+# 2. Requirements
 
 Step 1: Create the BaseModel class
 - Create a file named `base_model.py` in the `models` directory.
@@ -128,12 +128,12 @@ Step 5: Create unit tests
 By following these steps, you will build the foundation for your AirBnB clone project. Remember to regularly run your unit tests to ensure all classes and functionalities are working correctly.
 
 
-# 3.Guidlines
-# Python Unit Tests
+## Tests
+### Python Unit Tests
 
 This repository includes unit tests for Python scripts. Please ensure that you follow the guidelines mentioned below when creating and organizing your unit tests.
 
-## Guidelines
+### Test Guidelines
 
 - Editors: You can use any of the following editors: vi, vim, emacs.
 - File Format: Ensure that all your files end with a new line.
@@ -147,33 +147,7 @@ This repository includes unit tests for Python scripts. Please ensure that you f
 - Individual Test Execution: You can also test individual files using the command `python3 -m unittest tests/test_models/test_base_model.py`.
 - Documentation: All modules, classes, and functions should have appropriate documentation.
 
-## Documentation Guidelines
-
-- Modules: All your modules should have documentation. You can use the command `python3 -c 'print(__import__("my_module").__doc__)'` to verify the presence of documentation.
-- Classes: All your classes should have documentation. You can use the command `python3 -c 'print(__import__("my_module").MyClass.__doc__)'` to verify the presence of documentation.
-- Functions (Inside and Outside a Class): All your functions should have documentation. You can use the commands `python3 -c 'print(__import__("my_module").my_function.__doc__)'` and `python3 -c 'print(__import__("my_module").MyClass.my_function.__doc__)'` to verify the presence of documentation.
-
-We strongly encourage collaboration on test cases to ensure comprehensive coverage, including edge cases. By following these guidelines, you can create effective unit tests for your Python scripts.
-
-# Python Unit Tests
-
-This repository includes unit tests for Python scripts. Please ensure that you follow the guidelines mentioned below when creating and organizing your unit tests.
-
-## Guidelines
-
-- Editors: You can use any of the following editors: vi, vim, emacs.
-- File Format: Ensure that all your files end with a new line.
-- Test Folder: Place all your test files inside a folder named `tests`.
-- Unittest Module: Use the `unittest` module for writing your unit tests.
-- Test File Format: All your test files should have the `.py` extension.
-- Test File and Folder Naming: All your test files and folders should start with `test_`.
-- File Organization: Organize your test files in the `tests` folder in the same structure as your project files.
-  - For example, if your project file is `models/base_model.py`, the corresponding unit test should be located at `tests/test_models/test_base_model.py`.
-- Test Execution: Execute all your tests using the command `python3 -m unittest discover tests`.
-- Individual Test Execution: You can also test individual files using the command `python3 -m unittest tests/test_models/test_base_model.py`.
-- Documentation: All modules, classes, and functions should have appropriate documentation.
-
-## Documentation Guidelines
+### Documentation Guidelines
 
 - Modules: All your modules should have documentation. You can use the command `python3 -c 'print(__import__("my_module").__doc__)'` to verify the presence of documentation.
 - Classes: All your classes should have documentation. You can use the command `python3 -c 'print(__import__("my_module").MyClass.__doc__)'` to verify the presence of documentation.
@@ -182,45 +156,32 @@ This repository includes unit tests for Python scripts. Please ensure that you f
 We strongly encourage collaboration on test cases to ensure comprehensive coverage, including edge cases. By following these guidelines, you can create effective unit tests for your Python scripts.
 
 
-# 2.Getting Started
+
+
+# 3.Usage
 
 To use the command interpreter, follow the instructions below.
 
-### Prerequisites
+## Prerequisites
 
 - Python 3.x
 
-### Installation
+## Installation
 
 1. Clone the repository:
 
    ```shell
-   $ git clone https://github.com/your-username/airbnb-clone.git
-   $ cd airbnb-clone
-   ```
+   $ git clone https://github.com/Emyjakarta/AirBnB_clone?tab=readme-ov-file#0-Introduction
+   $ cd AirBnB-clone
+    ```
 
-2. Create a virtual environment (optional but recommended):
-
-   ```shell
-   $ python3 -m venv venv
-   $ source venv/bin/activate
-   ```
-
-3. Install the dependencies:
-
-   ```shell
-   $ pip install -r requirements.txt
-   ```
-
-### Usage
-
-1. Run the command interpreter:
+2. Run the command interpreter:
 
    ```shell
    $ python console.py
    ```
 
-2. Enter commands at the prompt `(hbnb)`. Available commands:
+3. Enter commands at the prompt `(hbnb)`. Available commands:
 
    - **create**: Creates a new instance of BaseModel, saves it to the JSON file, and prints the ID. Usage: `create <class name>`.
    - **show**: Prints the string representation of an instance based on the class name and ID. Usage: `show <class name> <id>`.
@@ -260,3 +221,19 @@ To use the command interpreter, follow the instructions below.
   ```shell
   (hbnb) update User <user_id> email "example@example.com"
   ```
+
+# 4.Authors
+
+<table>
+<tr>
+    <th></th>
+    <th></th>
+</tr>
+<tr>
+    <td>Khalid Sinteayhu</td>
+    <td>lilahseyfu@gmail.com</td>
+</tr>
+<tr>
+    <td>Decency Chukwuemeka Ukonu</td>
+    <td></td>
+</tr>
