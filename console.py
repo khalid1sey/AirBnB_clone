@@ -62,26 +62,6 @@ class HBNBCommand(cmd.Cmd):
         new_instance.save()
         print(new_instance.id)
 
-    # def parse_line(self, line):
-    #     # Split the line by '.' and '(' to get the class name, method name, and arguments
-    #     parts = line.split('.', 1)
-    #     print("{} {}".format("parts =", parts))
-    #     if len(parts) == 2:
-    #         class_name, rest = parts
-    #         if rest.startswith("show(") and rest.endswith(")"):
-    #             method_name = "show"
-    #             # Extract the ID from between the parentheses
-    #             id_str = rest[5:-1]
-    #             print("{} {}".format("id_str =", id_str))
-    #             print("{} {}".format("parts =", parts))
-    #             print("{} {}".format("class_name =", class_name))
-    #             print("{} {}".format("method_name =", method_name))
-    #             return method_name, class_name, id_str
-    #         elif rest == "all()":
-    #             self.do_all(rest)
-    #     return super().parse_line(line)
-        #args = line.split('.')
-
     def do_show(self, arg):
         """Prints the string representation of an instance."""
         args = shlex.split(arg)
@@ -195,34 +175,7 @@ class HBNBCommand(cmd.Cmd):
                 #     print("** Invalid update format **")
                 #     return
 
-        # super().default(line)
-            # elif method_arg.startswith('update(') and method_arg.endswith(')'):
-            # # Extract instance ID and attribute information
-            #     method_arg = method_arg[7:-1]  # Remove "update(" and ")"
-            #     instance_id = None
-            #     attribute_info = ""
-            #     inside_braces = False
-            #     for i, char in enumerate(method_arg):
-            #         if char == '{':
-            #             inside_braces = True
-            #         elif char == '}':
-            #             inside_braces = False
-            #         elif char == ',' and not inside_braces:
-            #             instance_id = method_arg[:i].strip()
-            #             attribute_info = method_arg[i + 1:].strip()
-            #             break
-
-            #     if instance_id is None or attribute_info == "":
-            #         print("** invalid update format **")
-            #         return
-
-            #         print("Instance ID:", instance_id)
-            #         print("Attribute info:", attribute_info)
-            #         # Call your do_update method with the extracted instance ID and attribute information
-            #         self.do_update(f"{class_name} {instance_id} {attribute_info}")
-            #         return
-
-    # super().default(line)
+        
             elif method_arg.startswith('update(') and method_arg.endswith(')'):
                 # Extracting instance id and attribute information from method_arg
                 instance_id, attribute_info = method_arg.split('(')[1][:-1].split(',', 1)
@@ -282,7 +235,7 @@ class HBNBCommand(cmd.Cmd):
         """Updates an instance based on the class name and id."""
         print("{} {}".format("arg =", arg))
         args = shlex.split(arg)
-        models = storage.all()
+        #models = storage.all()
 
         if not args:
             print("** class name missing **")
