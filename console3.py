@@ -2,6 +2,8 @@
 """Command interpreter for the AirBnB Clone project."""
 import cmd
 import shlex
+import ast
+import re
 from models import storage
 from models.user import User
 from models.place import Place
@@ -60,18 +62,24 @@ class HBNBCommand(cmd.Cmd):
         new_instance.save()
         print(new_instance.id)
 
-    def parse_line(self, line):
-        # Split the line by '.' and '(' to get the class name, method name, and arguments
-        parts = line.split('.', 1)
-        print("{} {}".format("parts =", parts))
-        if len(parts) == 2:
-            class_name, rest = parts
-            if rest.startswith("show(") and rest.endswith(")"):
-                method_name = "show"
-                # Extract the ID from between the parentheses
-                id_str = rest[5:-1]
-                return method_name, class_name, id_str
-        return super().parse_line(line)
+    # def parse_line(self, line):
+    #     # Split the line by '.' and '(' to get the class name, method name, and arguments
+    #     parts = line.split('.', 1)
+    #     print("{} {}".format("parts =", parts))
+    #     if len(parts) == 2:
+    #         class_name, rest = parts
+    #         if rest.startswith("show(") and rest.endswith(")"):
+    #             method_name = "show"
+    #             # Extract the ID from between the parentheses
+    #             id_str = rest[5:-1]
+    #             print("{} {}".format("id_str =", id_str))
+    #             print("{} {}".format("parts =", parts))
+    #             print("{} {}".format("class_name =", class_name))
+    #             print("{} {}".format("method_name =", method_name))
+    #             return method_name, class_name, id_str
+    #         elif rest == "all()":
+    #             self.do_all(rest)
+    #     return super().parse_line(line)
         #args = line.split('.')
 
     def do_show(self, arg):
@@ -122,28 +130,132 @@ class HBNBCommand(cmd.Cmd):
 
         del storage.all()[key]
         storage.save()
+    
+    def do_count(self, arg):
+        """Counts the number of instances of a class."""
+        args = shlex.split(arg)
+
+        if not args:
+            print("** class name missing **")
+            return
+
+        if args[0] not in self.valid_classes:
+            print("** class doesn't exist **")
+            return
+
+        count = sum(1 for obj in storage.all().values() if isinstance(obj, self.valid_classes[args[0]]))
+        print(count)
 
     def default(self, line):
-        method_name, class_name, args = self.parse_line(line)
-        if method_name == "show":
-            self.do_show(class_name, args)
+        args = line.split('.', 1)
+        if len(args) == 2:
+            print("{} {}".format("args =", args))
+            class_name, method_arg = args
+            if method_arg == 'count()':
+                self.do_count(class_name)
+                return
+            elif method_arg.startswith('show(') and method_arg.endswith(')'):
+                method_name = "show"
+                # Extract the ID from between the parentheses
+                id_str = method_arg[5:-1]
+                instance_id = method_arg.split('(')[1][:-1]
+                print("{} {}".format("id_str =", id_str))
+                print("{} {}".format("args =", args))
+                print("{} {}".format("class_name =", class_name))
+                print("{} {}".format("method_name =", method_name))
+                print("{} {}".format("instance_id =", instance_id))
 
-        #args = line.split('.')
-        print(line)
-        print(args)
-        #if len(args) == 2:
-         #   if args[1].startswith("show(") and args[1].endswith(")"):
-          #      id_str = args[1][5:-1] # Extract ID from between parentheses
-           #     self.do_show(args[0], id_str)
-            #elif args[1] == "all()":
-        if len(args) == 2 and args[1] == "all()":
-                self.do_all(args[0])
-            #else:
-             #   super().default(line)
-        #elif len(args) == 2 and args[1] == "show(":
-            #self.do_show(args[0])
-        else:
-            super().default(line)
+
+                # return method_name, class_name, id_str
+                #arg_str = "{} {}".format(class_name, args)
+                arg_str = "{} {}".format(class_name, id_str)
+                self.do_show(arg_str)
+                return
+            elif method_arg == "all()":
+                #method_name = "all"
+                self.do_all(class_name)
+                return
+            elif method_arg.startswith('destroy(') and method_arg.endswith(')'):
+                instance_id = method_arg.split('(')[1][:-1]
+                self.do_destroy(f"{class_name} {instance_id}")
+                return
+            
+            # elif method_arg.startswith('update(') and method_arg.endswith(')'):
+            #     # Extract instance ID and attribute information using regular expressions
+            #     match = re.match(r'update\("(.*?)",\s*({.*})\)', method_arg)
+            #     if match:
+            #         instance_id = match.group(1)
+            #         attribute_info = match.group(2)
+            #         print("Instance ID:", instance_id)
+            #         print("Attribute info:", attribute_info)
+            #         # Call your do_update method with the extracted instance ID and attribute information
+            #         self.do_update(f"{class_name} {instance_id} {attribute_info}")
+            #         return
+                # else:
+                #     print("** Invalid update format **")
+                #     return
+
+        # super().default(line)
+            # elif method_arg.startswith('update(') and method_arg.endswith(')'):
+            # # Extract instance ID and attribute information
+            #     method_arg = method_arg[7:-1]  # Remove "update(" and ")"
+            #     instance_id = None
+            #     attribute_info = ""
+            #     inside_braces = False
+            #     for i, char in enumerate(method_arg):
+            #         if char == '{':
+            #             inside_braces = True
+            #         elif char == '}':
+            #             inside_braces = False
+            #         elif char == ',' and not inside_braces:
+            #             instance_id = method_arg[:i].strip()
+            #             attribute_info = method_arg[i + 1:].strip()
+            #             break
+
+            #     if instance_id is None or attribute_info == "":
+            #         print("** invalid update format **")
+            #         return
+
+            #         print("Instance ID:", instance_id)
+            #         print("Attribute info:", attribute_info)
+            #         # Call your do_update method with the extracted instance ID and attribute information
+            #         self.do_update(f"{class_name} {instance_id} {attribute_info}")
+            #         return
+
+    # super().default(line)
+            elif method_arg.startswith('update(') and method_arg.endswith(')'):
+                # Extracting instance id and attribute information from method_arg
+                instance_id, attribute_info = method_arg.split('(')[1][:-1].split(',', 1)
+                attribute_info = attribute_info.strip()
+                if attribute_info.startswith('{') and attribute_info.endswith('}'):
+                    print("{} {}".format("instance_id =", instance_id))
+                    print("{} {}".format("attribute_info =", attribute_info))
+                    # Update with dictionary representation
+                    print("Hello")
+                    try:
+                        # Parse the dictionary representation into a Python dictionary
+                        attr_dict = eval(attribute_info)
+                        #print("{} {}".format("args[2] =", args[2]))
+                        print("{} {}".format("attr_dict =", attr_dict))
+                    except (NameError, SyntaxError):
+                        print("** invalid dictionary representation **")
+                        return
+
+                    #Update instance attributes with the dictionary values
+                    #for attr_name, attr_value in attr_dict.items():
+                        #setattr(obj, attr_name, attr_value)
+
+                    self.do_update(f"{class_name} {instance_id} {attribute_info}")
+                else:
+                    # Update with attribute name and value
+                    attribute_name, attribute_value = attribute_info.split(',', 1)
+                    attribute_name = attribute_name.strip()
+                    attribute_value = attribute_value.strip()
+                    self.do_update(f"{class_name} {instance_id} {attribute_name} {attribute_value}")
+                return
+        super().default(line)
+
+   
 
     def do_all(self, arg):
         """Prints all string representation of all instances."""
@@ -165,49 +277,10 @@ class HBNBCommand(cmd.Cmd):
                         print(str(obj))
         else:
             print([str(obj) for obj in objects.values()])
-        #if not args:
-        #if args is []:
-            #print([str(obj) for obj in objects.values()])
-        #elif args[0] in self.valid_classes and len(args) >= 2 and args[1] == "all()" and hasattr(self.valid_classes[args[0]], "all"):
-            #print([str(obj) for obj in self.valid_classes[args[0]].all()])
-        #elif args[0] == "all":
-            #print([str(obj) for obj in objects.values()])
-        #elif len(args) >= 2 and args[1] == ".all()":
-            #class_name = args[0]
-            #if class_name in self.valid_classes:
-                 #print([str(obj) for obj in objects.values() if type(obj).__name__ == class_name])
-
-        #if args[2] in self.valid_classes:
-            #print("{}".format(args[0]))
-            #print([str(obj) for obj in objects.values() if type(obj).__name__ == args[0]])
-            #else:
-                #print("** class doesn't exist **")
-        #else:
-         #   print("** Unknown syntax: {} **".format(arg))
-    #def do_all(self, model_name: str) -> None:
-     #   """Prints the string representation for all or some model instances."""
-        #if model_name and shlex.split(model_name)[0] not in self.__models:
-      #  if model_name and shlex.split(model_name)[0] not in self.__valid_classes:
-       #     print("** class doesn't exist **")
-        #    return
-
-        #objects = storage.all()
-       # instances = []
-
-        # print the instances for a specific model, if provided
-       # if model_name:
-           # for obj in objects.values():
-          #      if obj.__class__.__name__ == model_name:
-         #           instances.append(str(obj))
-        #else:
-            # print all the instances available
-          #  for obj in objects.values():
-         #       instances.append(str(obj))
-
-        #print(instances)
-    
+       
     def do_update(self, arg):
         """Updates an instance based on the class name and id."""
+        print("{} {}".format("arg =", arg))
         args = shlex.split(arg)
         models = storage.all()
 
@@ -229,32 +302,72 @@ class HBNBCommand(cmd.Cmd):
             print("** no instance found **")
             return
 
+        obj = storage.all()[key]
         if len(args) < 3:
             print("** attribute name missing **")
             return
 
-        if len(args) < 4:
-            print("** value missing **")
-            return
+        # Extract and parse the dictionary representation using ast.literal_eval
+        print("{} {}".format("args[2:] =", args[2:]))
+        dict_repr = "{'Five': 5, 'Six': '6'}"
+        dict_obj = ast.literal_eval(dict_repr)
+        print("{} {}".format("dict_repr (hardcode) =", dict_repr))
+        #dict_repr = " ".join(args[2:])
+        dict_repr = args[-1]
+        if dict_repr.startswith('{') and dict_repr.endswith('}'):
+            print("World")
+            #dict_repr = " ".join(args[2:])
+            print("{} {}".format("dict_repr =", dict_repr))
+            print("{} {}".format("dict_repr[0] =", dict_repr[0]))
+            print("{} {}".format("dict_repr[1] =", dict_repr[1]))
+            print("{} {}".format("dict_repr[2] =", dict_repr[2]))
+            print("{} {}".format("dict_repr[5] =", dict_repr[5]))
+            print("{} {}".format("args[2] =", args[2]))
+            # attr_dict = ast.literal_eval(dict_repr)
+            # print("{} {}".format("attr_dict1 =", attr_dict))
+            print("{} {}".format("dict_repr before try block =", dict_repr))
+            try:
+                print("Hurray")
+                attr_dict = ast.literal_eval(dict_repr)
+                #attr_dict = eval(dict_repr)
+                #print("{} {}".format("args[2] =", args[2]))
+                print("{} {}".format("attr_dict =", attr_dict))
+                # for attr_name, attr_value in attr_dict.items():
+                #     setattr(obj, attr_name, attr_value)
+                print("{} {}".format("dict_repr before exception =", dict_repr))
+            except (ValueError, SyntaxError):
+                #pass
+                print("** invalid dictionary representation **")
+                return
+        
 
-        obj = storage.all()[key]
-        #instance = models[key]
-        attr_name = args[2]
-        attr_value = args[3]
+            #Update instance attributes with the dictionary values
+            for attr_name, attr_value in attr_dict.items():
+                setattr(obj, attr_name, attr_value)
+        else:
+            # If the third argument is an attribute name and fourth argument is a value
+            print("{} {}".format("args =", args))
+            print("{} {}".format("args[0] =", args[0]))
+            print("{} {}".format("args[1] =", args[1]))
+            print("{} {}".format("args[2] =", args[2]))
+            print("Holiday")
+            if len(args) < 4:
+                print("** value missing **")
+                return
 
-        #if hasattr(obj, attr_name):
-            #setattr(obj, attr_name, eval(attr_value))
-            #storage.save()
-        try:
-            attr_value = eval(attr_value)
-        except (NameError, SyntaxError):
-            pass
-            #print("** attribute doesn't exist **")
-        setattr(obj, attr_name, attr_value)
+            #instance = models[key]
+            attr_name = args[2]
+            attr_value = args[3]
+
+            try:
+                attr_value = eval(attr_value)
+            except (NameError, SyntaxError):
+                pass
+            setattr(obj, attr_name, attr_value)
+
+        
         storage.save()
-        #else:
-            #print("** attribute doesn't exist **")
-
+       
     
 
 
