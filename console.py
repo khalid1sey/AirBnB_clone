@@ -204,11 +204,7 @@ class HBNBCommand(cmd.Cmd):
                         except (ValueError, IndexError):
                             pass
             self.onecmd(line.strip())
-            return 
-   
-  
-
-   
+            return    
 
     def do_all(self, arg):
         """Prints all string representation of all instances."""
@@ -223,7 +219,6 @@ class HBNBCommand(cmd.Cmd):
             if args[0] in self.valid_classes:
                 for obj in objects.values():
                     if type(obj) is self.valid_classes[args[0]]:
-                 
                         print(str(obj))
         else:
             print(str([str(obj) for obj in objects.values()]))
@@ -282,7 +277,6 @@ class HBNBCommand(cmd.Cmd):
                 print("** invalid dictionary representation **")
                 return
         
-
             #Update instance attributes with the dictionary values
             for attr_name, attr_value in dict_repr.items():
                 setattr(obj, attr_name, attr_value)
@@ -308,8 +302,5 @@ class HBNBCommand(cmd.Cmd):
 
         storage.save()
        
-    
-
-
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
