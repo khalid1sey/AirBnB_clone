@@ -243,7 +243,7 @@ class HBNBCommand(cmd.Cmd):
                  
                         print(str(obj))
         else:
-            print([str(obj) for obj in objects.values()])
+            print(str([str(obj) for obj in objects.values()]))
        
     def do_update(self, arg):
         """Updates an instance based on the class name and id."""
@@ -323,7 +323,6 @@ class HBNBCommand(cmd.Cmd):
                 pass
             setattr(obj, attr_name, attr_value)
 
-        
         storage.save()
        
     
