@@ -160,24 +160,24 @@ class HBNBCommand(cmd.Cmd):
                 return
             elif re.match(r"(\w+)\.(\w+)\((.*)\)", line):
          
-                get_regex = list(re.match(r"(\w+)\.(\w+)\((.*)\)", line).groups())
-                print("{} {}".format("get_regex =", get_regex))
-                # Get rid of empty lines in the returned pattern
-                if get_regex[-1] == "":
-                    get_regex.pop()
+                pattern = list(re.match(r"(\w+)\.(\w+)\((.*)\)", line).groups())
+                print("{} {}".format("pattern =", pattern))
+                # Eliminate empty lines in the returned pattern
+                if pattern[-1] == "":
+                    pattern.pop()
 
-                if get_regex:
-                    if len(get_regex) >= 2:
-                        class_name, user_cmd = get_regex[0], get_regex[1]
+                if pattern:
+                    if len(pattern) >= 2:
+                        class_name, user_cmd = pattern[0], pattern[1]
                         line = f"{user_cmd} {class_name}"
 
                         try:
-                            obj_dict = re.findall(r"\{.*?\}", get_regex[2])[0]
+                            obj_dict = re.findall(r"\{.*?\}", pattern[2])[0]
 
                             if user_cmd == "update" and obj_dict:
                                 obj_dict = eval(obj_dict)
                                 print("{} {}".format("obj_dict after eval=", obj_dict))
-                                instance_id = shlex.split(get_regex[2])[0].replace(",", "")
+                                instance_id = shlex.split(pattern[2])[0].replace(",", "")
                                 print("{} {}".format("instance_id after =", instance_id))
                                 line += f" {instance_id} {obj_dict}"
                                 print("{} {}".format("line at end of try block b4 onecmd =", line))
@@ -191,13 +191,13 @@ class HBNBCommand(cmd.Cmd):
                             pass
 
                         # Try and preserve a list if it exists
-                        if len(get_regex) >= 3:
-                            list_data = re.findall(r"\[.*\]", get_regex[2])
+                        if len(pattern) >= 3:
+                            list_data = re.findall(r"\[.*\]", pattern[2])
                             if list_data:
-                                get_regex[2] = get_regex[2].replace(str(list_data[0]), "")
+                                pattern[2] = pattern[2].replace(str(list_data[0]), "")
 
                         try:
-                            extra_args = shlex.split(get_regex[2])
+                            extra_args = shlex.split(pattern[2])
                             line += " "
                             line += " ".join(extra_args).replace(",", "")
                             line += f" {list_data or ''}"
