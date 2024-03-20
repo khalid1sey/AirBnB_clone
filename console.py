@@ -190,7 +190,7 @@ class HBNBCommand(cmd.Cmd):
                             #print("** instance id missing **")
                             pass
 
-                        # Try and preserve a list if it exists
+                        # Check if there is a list and retain it if it exists
                         if len(pattern) >= 3:
                             list_info = re.findall(r"\[.*\]", pattern[2])
                             if list_info:
@@ -270,7 +270,7 @@ class HBNBCommand(cmd.Cmd):
             print("{} {}".format("dict before try block =", dict))
             dictionary_string = dict[0].strip("'")
             try:
-                # print("Hurray")
+                
                 dict_repr = ast.literal_eval(dictionary_string)
                 print("{} {}".format("dict_repr before exception =", dict_repr))
             except (ValueError, SyntaxError):
@@ -282,10 +282,6 @@ class HBNBCommand(cmd.Cmd):
                 setattr(obj, attr_name, attr_value)
         else:
             # If the third argument is an attribute name and fourth argument is a value
-            # print("{} {}".format("args =", args))
-            # print("{} {}".format("args[0] =", args[0]))
-            # print("{} {}".format("args[1] =", args[1]))
-            # print("{} {}".format("args[2] =", args[2]))
           
             if len(args) < 4:
                 print("** value missing **")
