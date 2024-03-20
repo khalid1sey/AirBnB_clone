@@ -129,7 +129,7 @@ class HBNBCommand(cmd.Cmd):
     def default(self, line):
         args = line.split('.', 1)
         if len(args) == 2:
-            print("{} {}".format("args =", args))
+            # print("{} {}".format("args =", args))
             class_name, method_arg = args
             if method_arg == 'count()':
                 self.do_count(class_name)
@@ -139,11 +139,11 @@ class HBNBCommand(cmd.Cmd):
                 # Extract the ID from between the parentheses
                 id_str = method_arg[5:-1]
                 instance_id = method_arg.split('(')[1][:-1]
-                print("{} {}".format("id_str =", id_str))
-                print("{} {}".format("args =", args))
-                print("{} {}".format("class_name =", class_name))
-                print("{} {}".format("method_name =", method_name))
-                print("{} {}".format("instance_id =", instance_id))
+                # print("{} {}".format("id_str =", id_str))
+                # print("{} {}".format("args =", args))
+                # print("{} {}".format("class_name =", class_name))
+                # print("{} {}".format("method_name =", method_name))
+                # print("{} {}".format("instance_id =", instance_id))
 
 
             
@@ -176,12 +176,12 @@ class HBNBCommand(cmd.Cmd):
 
                             if method == "update" and dict:
                                 dict = eval(dict)
-                                print("{} {}".format("dict after eval=", dict))
+                                # print("{} {}".format("dict after eval=", dict))
                                 instance_id = shlex.split(pattern[2])[0].replace(",", "")
-                                print("{} {}".format("instance_id after =", instance_id))
+                                # print("{} {}".format("instance_id after =", instance_id))
                                 line += f" {instance_id} {dict}"
-                                print("{} {}".format("line at end of try block b4 onecmd =", line))
-                                print("{} {}".format("line at end of try block after strip b4 onecmd =", line.strip()))
+                                # print("{} {}".format("line at end of try block b4 onecmd =", line))
+                                # print("{} {}".format("line at end of try block after strip b4 onecmd =", line.strip()))
                                 self.onecmd(line.strip())
                                 #self.do_update(f"{class_name} {instance_id} {dict}")
                                 return
@@ -208,38 +208,44 @@ class HBNBCommand(cmd.Cmd):
 
     def do_all(self, arg):
         """Prints all string representation of all instances."""
-        print("Inside do_all")
+        # print("Inside do_all")
         args = shlex.split(arg)
-        print("{} {}".format("arg =", arg))
-        print("{} {}".format("args =", args))
+        # print("{} {}".format("arg =", arg))
+        # print("{} {}".format("args =", args))
        
 
         objects = storage.all()
         if args:
-            if args[0] in self.valid_classes:
+            class_name = args[0]
+            # print("{} {}".format("class_name =", class_name))
+            if class_name not in self.valid_classes:
+                print("** class doesn't exist **")
+            else:
                 for obj in objects.values():
-                    if type(obj) is self.valid_classes[args[0]]:
+                    if type(obj) is self.valid_classes[class_name]:
                         print(str(obj))
+                    # else:
+                    #     print("** class doesn't exist **")
         else:
             print(str([str(obj) for obj in objects.values()]))
        
     def do_update(self, arg):
         """Updates an instance based on the class name and id."""
-        print("{} {}".format("arg in do_update =", arg))
+        # print("{} {}".format("arg in do_update =", arg))
         dict = re.findall(r"\{.*?\}", arg)
-        print("{} {}".format("dict in do_update =", dict))
-        print("{} {}".format("arg[2] in do_update =", arg[2]))
+        # print("{} {}".format("dict in do_update =", dict))
+        # print("{} {}".format("arg[2] in do_update =", arg[2]))
         
         pattern = r"(.*)"
         match = re.match(pattern, arg)
-        print("{} {}".format("match in do_update =", match))
+        # print("{} {}".format("match in do_update =", match))
         instance_id_match = re.search(r'\b[\da-f]{8}(-[\da-f]{4}){3}-[\da-f]{12}\b', match.group(1))
-        print("{} {}".format("instance_id_match =", instance_id_match))
+        # print("{} {}".format("instance_id_match =", instance_id_match))
         if not instance_id_match:
             print("** instance id missing **")
             return
         args = shlex.split(arg)
-        print("{} {}".format("args in do_update =", args))
+        # print("{} {}".format("args in do_update =", args))
         models = storage.all()
 
         if not args:
@@ -264,15 +270,15 @@ class HBNBCommand(cmd.Cmd):
             return
 
         # Extract and parse the dictionary representation using ast.literal_eval
-        print("{} {}".format("args[2:] =", args[2:]))
+        # print("{} {}".format("args[2:] =", args[2:]))
         
         if dict:
-            print("{} {}".format("dict before try block =", dict))
+            # print("{} {}".format("dict before try block =", dict))
             dictionary_string = dict[0].strip("'")
             try:
                 
                 dict_repr = ast.literal_eval(dictionary_string)
-                print("{} {}".format("dict_repr before exception =", dict_repr))
+                # print("{} {}".format("dict_repr before exception =", dict_repr))
             except (ValueError, SyntaxError):
                 print("** invalid dictionary representation **")
                 return
