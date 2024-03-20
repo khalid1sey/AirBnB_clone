@@ -168,13 +168,13 @@ class HBNBCommand(cmd.Cmd):
 
                 if pattern:
                     if len(pattern) >= 2:
-                        class_name, user_cmd = pattern[0], pattern[1]
-                        line = f"{user_cmd} {class_name}"
+                        class_name, method = pattern[0], pattern[1]
+                        line = f"{method} {class_name}"
 
                         try:
                             obj_dict = re.findall(r"\{.*?\}", pattern[2])[0]
 
-                            if user_cmd == "update" and obj_dict:
+                            if method == "update" and obj_dict:
                                 obj_dict = eval(obj_dict)
                                 print("{} {}".format("obj_dict after eval=", obj_dict))
                                 instance_id = shlex.split(pattern[2])[0].replace(",", "")
@@ -192,15 +192,15 @@ class HBNBCommand(cmd.Cmd):
 
                         # Try and preserve a list if it exists
                         if len(pattern) >= 3:
-                            list_data = re.findall(r"\[.*\]", pattern[2])
-                            if list_data:
-                                pattern[2] = pattern[2].replace(str(list_data[0]), "")
+                            list_info = re.findall(r"\[.*\]", pattern[2])
+                            if list_info:
+                                pattern[2] = pattern[2].replace(str(list_info[0]), "")
 
                         try:
-                            extra_args = shlex.split(pattern[2])
+                            more_arg = shlex.split(pattern[2])
                             line += " "
-                            line += " ".join(extra_args).replace(",", "")
-                            line += f" {list_data or ''}"
+                            line += " ".join(more_arg).replace(",", "")
+                            line += f" {list_info or ''}"
                         except (ValueError, IndexError):
                             pass
             self.onecmd(line.strip())
