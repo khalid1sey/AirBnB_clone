@@ -46,10 +46,12 @@ class HBNBCommand(cmd.Cmd):
 
     def help_EOF(self):
         """Print help for EOF command."""
-        print("EOF command to exit the program")
+        print("EOF signal to exit the program")
+        # print("EOF command to exit the program")
 
     def do_create(self, arg):
         """Create a new instance of BaseModel."""
+        # print("{} {}".format("arg =", arg))
         if not arg:
             print("** class name missing **")
             return
@@ -58,6 +60,10 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
             return
 
+        # check if the provided argument has a valid syntax
+        # if ".create()" in arg:
+        #     print(f"*** Unknown syntax: {arg}.create()")
+        #     return
         new_instance = eval(f"{arg}()")
         new_instance.save()
         print(new_instance.id)
@@ -134,6 +140,9 @@ class HBNBCommand(cmd.Cmd):
             if method_arg == 'count()':
                 self.do_count(class_name)
                 return
+            elif method_arg == 'create()':
+                print(f"*** Unknown syntax: {class_name}.create()")
+                return
             elif method_arg.startswith('show(') and method_arg.endswith(')'):
                 method_name = "show"
                 # Extract the ID from between the parentheses
@@ -161,7 +170,7 @@ class HBNBCommand(cmd.Cmd):
             elif re.match(r"(\w+)\.(\w+)\((.*)\)", line):
          
                 pattern = list(re.match(r"(\w+)\.(\w+)\((.*)\)", line).groups())
-                print("{} {}".format("pattern =", pattern))
+                # print("{} {}".format("pattern =", pattern))
                 # Eliminate empty lines in the returned pattern
                 if pattern[-1] == "":
                     pattern.pop()
