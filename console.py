@@ -165,24 +165,7 @@ class HBNBCommand(cmd.Cmd):
                 # Get rid of empty lines in the returned pattern
                 if get_regex[-1] == "":
                     get_regex.pop()
-        
-            # elif method_arg.startswith('update(') and method_arg.endswith(')'):
-            #     # Extracting instance id and attribute information from method_arg
-            #     instance_id, attribute_info = method_arg.split('(')[1][:-1].split(',', 1)
-            #     attribute_info = attribute_info.strip()
-            #     if attribute_info.startswith('{') and attribute_info.endswith('}'):
-            #         print("{} {}".format("instance_id =", instance_id))
-            #         print("{} {}".format("attribute_info =", attribute_info))
-            #         # Update with dictionary representation
-            #         print("Hello")
-            #         try:
-            #             # Parse the dictionary representation into a Python dictionary
-            #             attr_dict = eval(attribute_info)
-            #             #print("{} {}".format("args[2] =", args[2]))
-            #             print("{} {}".format("attr_dict =", attr_dict))
-            #         except (NameError, SyntaxError):
-            #             print("** invalid dictionary representation **")
-            #             return
+
                 if get_regex:
                     if len(get_regex) >= 2:
                         class_name, user_cmd = get_regex[0], get_regex[1]
