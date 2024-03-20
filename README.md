@@ -258,5 +258,5 @@ This project airBnB-clone is made as Alx cohort 21 Team project.
 </tr>
 <tr>
     <td>Decency Chukwuemeka Ukonu</td>
-    <td></td>ukonud4@gmail.com</td>
+    <td>ukonud4@gmail.com</td>
 </tr>
