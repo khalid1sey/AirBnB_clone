@@ -172,18 +172,18 @@ class HBNBCommand(cmd.Cmd):
                         line = f"{method} {class_name}"
 
                         try:
-                            obj_dict = re.findall(r"\{.*?\}", pattern[2])[0]
+                            dict = re.findall(r"\{.*?\}", pattern[2])[0]
 
-                            if method == "update" and obj_dict:
-                                obj_dict = eval(obj_dict)
-                                print("{} {}".format("obj_dict after eval=", obj_dict))
+                            if method == "update" and dict:
+                                dict = eval(dict)
+                                print("{} {}".format("dict after eval=", dict))
                                 instance_id = shlex.split(pattern[2])[0].replace(",", "")
                                 print("{} {}".format("instance_id after =", instance_id))
-                                line += f" {instance_id} {obj_dict}"
+                                line += f" {instance_id} {dict}"
                                 print("{} {}".format("line at end of try block b4 onecmd =", line))
                                 print("{} {}".format("line at end of try block after strip b4 onecmd =", line.strip()))
                                 self.onecmd(line.strip())
-                                #self.do_update(f"{class_name} {instance_id} {obj_dict}")
+                                #self.do_update(f"{class_name} {instance_id} {dict}")
                                 return
                          
                         except IndexError:
@@ -226,8 +226,8 @@ class HBNBCommand(cmd.Cmd):
     def do_update(self, arg):
         """Updates an instance based on the class name and id."""
         print("{} {}".format("arg in do_update =", arg))
-        obj_dict = re.findall(r"\{.*?\}", arg)
-        print("{} {}".format("obj_dict in do_update =", obj_dict))
+        dict = re.findall(r"\{.*?\}", arg)
+        print("{} {}".format("dict in do_update =", dict))
         print("{} {}".format("arg[2] in do_update =", arg[2]))
         
         pattern = r"(.*)"
@@ -266,11 +266,11 @@ class HBNBCommand(cmd.Cmd):
         # Extract and parse the dictionary representation using ast.literal_eval
         print("{} {}".format("args[2:] =", args[2:]))
         
-        if obj_dict:
-            print("{} {}".format("obj_dict before try block =", obj_dict))
-            dictionary_string = obj_dict[0].strip("'")
+        if dict:
+            print("{} {}".format("dict before try block =", dict))
+            dictionary_string = dict[0].strip("'")
             try:
-                print("Hurray")
+                # print("Hurray")
                 dict_repr = ast.literal_eval(dictionary_string)
                 print("{} {}".format("dict_repr before exception =", dict_repr))
             except (ValueError, SyntaxError):
@@ -282,11 +282,11 @@ class HBNBCommand(cmd.Cmd):
                 setattr(obj, attr_name, attr_value)
         else:
             # If the third argument is an attribute name and fourth argument is a value
-            print("{} {}".format("args =", args))
-            print("{} {}".format("args[0] =", args[0]))
-            print("{} {}".format("args[1] =", args[1]))
-            print("{} {}".format("args[2] =", args[2]))
-            print("Holiday")
+            # print("{} {}".format("args =", args))
+            # print("{} {}".format("args[0] =", args[0]))
+            # print("{} {}".format("args[1] =", args[1]))
+            # print("{} {}".format("args[2] =", args[2]))
+          
             if len(args) < 4:
                 print("** value missing **")
                 return
