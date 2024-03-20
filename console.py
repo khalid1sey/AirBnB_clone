@@ -258,8 +258,8 @@ class HBNBCommand(cmd.Cmd):
             return
 
         key = "{}.{}".format(args[0], args[1])
-        print("{} {}".format("key =", key))
-        print("{} {}".format("storage.all() =", storage.all()))
+        # print("{} {}".format("key =", key))
+        # print("{} {}".format("storage.all() =", storage.all()))
         if key not in storage.all():
         
             print("** no instance found **")
