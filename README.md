@@ -201,7 +201,7 @@ To use the command interpreter, follow the instructions below.
 2. Run the command interpreter:
 
    ```shell
-   $ python console.py
+   $ python console3.py
    ```
 
 3. Enter commands at the prompt `(hbnb)`. Available commands:
