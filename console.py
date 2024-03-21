@@ -50,7 +50,7 @@ class HBNBCommand(cmd.Cmd):
         # print("EOF command to exit the program")
 
     def do_create(self, arg):
-        """Create a new instance of BaseModel."""
+        """Create instance specified by user"""
         # print("{} {}".format("arg =", arg))
         if not arg:
             print("** class name missing **")
@@ -69,7 +69,7 @@ class HBNBCommand(cmd.Cmd):
         print(new_instance.id)
 
     def do_show(self, arg):
-        """Prints the string representation of an instance."""
+        """Print string repr of a class instance, given id"""
         args = shlex.split(arg)
 
         if not args:
@@ -94,7 +94,7 @@ class HBNBCommand(cmd.Cmd):
         print(storage.all()[key])
 
     def do_destroy(self, arg):
-        """Deletes an instance based on the class name and id."""
+        """Delete a class instance of a given id, save result to json file"""
         args = shlex.split(arg)
 
         if not args:
@@ -118,7 +118,7 @@ class HBNBCommand(cmd.Cmd):
         storage.save()
     
     def do_count(self, arg):
-        """Counts the number of instances of a class."""
+        """Display count of instances specified"""
         args = shlex.split(arg)
 
         if not args:
@@ -212,11 +212,14 @@ class HBNBCommand(cmd.Cmd):
                             line += f" {list_info or ''}"
                         except (ValueError, IndexError):
                             pass
+            else:
+                print("** invalid syntax **")
+                return
             self.onecmd(line.strip())
             return    
 
     def do_all(self, arg):
-        """Prints all string representation of all instances."""
+        """Prints all string representation of all instances based or not on the class name"""
         # print("Inside do_all")
         args = shlex.split(arg)
         # print("{} {}".format("arg =", arg))
@@ -239,77 +242,236 @@ class HBNBCommand(cmd.Cmd):
             print(str([str(obj) for obj in objects.values()]))
        
     def do_update(self, arg):
-        """Updates an instance based on the class name and id."""
-        # print("{} {}".format("arg in do_update =", arg))
-        dict = re.findall(r"\{.*?\}", arg)
-        # print("{} {}".format("dict in do_update =", dict))
-        # print("{} {}".format("arg[2] in do_update =", arg[2]))
-        
-        pattern = r"(.*)"
-        match = re.match(pattern, arg)
-        # print("{} {}".format("match in do_update =", match))
-        instance_id_match = re.search(r'\b[\da-f]{8}(-[\da-f]{4}){3}-[\da-f]{12}\b', match.group(1))
-        # print("{} {}".format("instance_id_match =", instance_id_match))
-        if not instance_id_match:
-            print("** instance id missing **")
-            return
-        args = shlex.split(arg)
-        # print("{} {}".format("args in do_update =", args))
-        models = storage.all()
-
-        if not args:
+        """Updates an instance based on the class name and id by adding or updating attribute (save the change into the JSON file)"""
+        if arg == "":
             print("** class name missing **")
             return
+        elif re.findall(r"\{.*?\}", arg):
+            
+            pattr = r'(\w+)?\s?([\da-f-]+)?\s?({.*})?'
+            match1 = re.match(pattr, arg)
+            # print("{} {}".format("match1 in do_update =", match1))
+            if match1:
+                class_name = match1.group(1)
+                # method = match1.group(2)
+                instance_id = match1.group(2)
+                dictionary_representation = match1.group(3)
 
-        if args[0] not in self.valid_classes:
-            print("** class doesn't exist **")
-            return
+                key = "{}.{}".format(class_name, instance_id)
+                if key not in storage.all():
 
-        key = "{}.{}".format(args[0], args[1])
-        # print("{} {}".format("key =", key))
-        # print("{} {}".format("storage.all() =", storage.all()))
-        if key not in storage.all():
-        
-            print("** no instance found **")
-            return
-
-        obj = storage.all()[key]
-        if len(args) < 3:
-            print("** attribute name missing **")
-            return
-
-        # Extract and parse the dictionary representation using ast.literal_eval
-        # print("{} {}".format("args[2:] =", args[2:]))
-        
-        if dict:
-            # print("{} {}".format("dict before try block =", dict))
-            dictionary_string = dict[0].strip("'")
-            try:
+                    # print("** no instance found **")
+                    # return
                 
-                dict_repr = ast.literal_eval(dictionary_string)
-                # print("{} {}".format("dict_repr before exception =", dict_repr))
-            except (ValueError, SyntaxError):
-                print("** invalid dictionary representation **")
-                return
-        
-            #Update instance attributes with the dictionary values
-            for attr_name, attr_value in dict_repr.items():
-                setattr(obj, attr_name, attr_value)
+                    if class_name is None:
+                        print("** class name missing **")
+                        return
+                
+                    if class_name not in self.valid_classes:
+                        print("** class doesn't exist **")
+                        return
+
+                    if class_name and instance_id is None:
+                        print("** instance id missing **")
+                        return
+                    
+                    if instance_id not in storage.all():
+                        print("** no instance found **")
+                        return
+                # key = "{}.{}".format(class_name, instance_id)
+                obj = storage.all()[key]
+                # if key not in storage.all():
+                #     print("** no instance found **")
+                #     return
+                
+                # if instance_id is None:
+                #     print("** instance id missing **")
+                #     return
+
+                dict = re.findall(r"\{.*?\}", arg)
+                
+                # args = shlex.split(arg)
+                # # print("{} {}".format("args in do_update =", args))
+                # models = storage.all()
+                
+                if dict:
+                    # print("{} {}".format("dict before try block =", dict))
+                    dictionary_string = dict[0].strip("'")
+                    try:
+                        
+                        dict_repr = ast.literal_eval(dictionary_string)
+                        # print("{} {}".format("dict_repr before exception =", dict_repr))
+                    except (ValueError, SyntaxError):
+                        print("** invalid dictionary representation **")
+                        return
+                
+                    #Update instance attributes with the dictionary values
+                    for attr_name, attr_value in dict_repr.items():
+                        setattr(obj, attr_name, attr_value)
         else:
-            # If the third argument is an attribute name and fourth argument is a value
-          
-            if len(args) < 4:
-                print("** value missing **")
-                return
+            # print("{} {}".format("arg in do_update =", arg))
+            patt = r'(\w+)\("([\da-f-]+)"(?:, "(\w+)")?(?:, "(\w+)")?\)'
+            # patt2 = r'(\w+\s?)?([\da-f-]+\s?)?(\w+\s?)?"([^"]*)"?'
+            # patt2 = r'(\w+)?\s?([\da-f-]+)?\s?(\w+)?\s?("([^"]*)")?'
+            # patt2 = r'(\w+)?\s?([\da-f-]+)?\s?(\w+)?\s?([\d\.]+)?'
+            # patt2 = r'(\w+)?\s?([\da-f-]+)?\s?(\w+)?\s?((\d+\.?\d*)|(\d*\.?\d+)|"([^"]*)")?'
+            # patt2 = r"(\w+)?\s?([\da-f-]+)?\s?(\w+)?\s?((\d+\.?\d*)|(\d*\.?\d+)|"([^"]*)"|'([^']*)')?"
+            patt2 = r"(\w+)?\s?([\da-f-]+)?\s?(\w+)?\s?((\d+\.?\d*)|(\d*\.?\d+)|\"([^\"]*)\"|'([^']*)')?"
+            # patt2 = r'(\w+\s*)?([\da-f-]+\s*)?(\w+\s*)?"([^"]*)"?'
+            # patt2 = r'(\w+)?\s?([\da-f-]+)?\s?(\w+)?\s?"([^"]*)"?'    
+            mach = re.match(patt, arg)
+            mach2 = re.match(patt2, arg)
+            
 
-            attr_name = args[2]
-            attr_value = args[3]
+            if mach:
+                class_name = mach.group(1)
+                instance_id = mach.group(2)
+                attribute_name = mach.group(3)
+                attribute_value = mach.group(4)
+                
+                # print("Class Name:", class_name)
+                # print("Instance ID:", instance_id)
+                # print("attribute_name:", attribute_name)
+                # print("attribute_value:", attribute_value)
+                
+                key = "{}.{}".format(class_name, instance_id)
+                if key not in storage.all():
+                    
+                    # obj = storage.all()[key]
 
-            try:
-                attr_value = eval(attr_value)
-            except (NameError, SyntaxError):
-                pass
-            setattr(obj, attr_name, attr_value)
+                    if class_name is None:
+                        print("** class name missing **")
+                        return
+                
+                    if class_name not in self.valid_classes:
+                        print("** class doesn't exist **")
+                        return
+
+                    if class_name and instance_id is None:
+                        print("** instance id missing **")
+                        return
+                    
+                    if instance_id not in storage.all():
+                        print("** no instance found **")
+                        return
+                    
+                elif key in storage.all():
+                    if attribute_name is None and attribute_value is None:
+                        print("** attribute name missing **")
+                        return
+                    elif attribute_name is not None and attribute_value is None:
+                        print("** value missing **")
+                        return
+                    
+                attr_name = attribute_name
+                attr_value = attribute_value
+                obj = storage.all()[key]
+                    
+                    # if attribute_name is None and attribute_value is None:
+                    #     print("** attribute name missing **")
+                    #     return
+                    # elif attribute_name is not None and attribute_value is None:
+                    #     print("** value missing **")
+                    #     return
+                    
+                    # if key not in storage.all():
+                    #     print("** no instance found **")
+                    #     return
+                    
+                    # if instance_id is None:
+                    #     ("** instance id missing **")
+                    #     return
+                    
+                    # attr_name = attribute_name
+                    # attr_value = attribute_value
+
+                try:
+                    attr_value = eval(attr_value)
+                except (NameError, SyntaxError):
+                    pass
+                setattr(obj, attr_name, attr_value)
+            else:
+                if mach2:
+                    list_mach = list(mach2.groups())
+                    # print("{} {}".format("list_mach =", list_mach))
+                    # print("{} {}".format("len(list_mach) =", len(list_mach)))
+                    
+                    class_name = mach2.group(1)
+                    instance_id = mach2.group(2)
+                    attribute_name = mach2.group(3)
+                    attribute_value = mach2.group(4)
+                    
+                    # print("Class Name:", class_name)
+                    # print("Instance ID:", instance_id)
+                    # print("attribute_name:", attribute_name)
+                    # print("attribute_value:", attribute_value)
+                    
+                    key = "{}.{}".format(class_name, instance_id)
+                    # print("{} {}".format("key =", key))
+                    if key not in storage.all():
+
+                        if class_name is None:
+                            print("** class name missing **")
+                            return
+                    
+                        if class_name not in self.valid_classes:
+                            print("** class doesn't exist **")
+                            return
+                        
+                        if class_name and instance_id is None:
+                            print("** instance id missing **")
+                            return
+                        
+                        if instance_id not in storage.all():
+                            print("** no instance found **")
+                            return
+                    
+                        # if attribute_name is None and attribute_value is None:
+                        #     print("** attribute name missing **")
+                        #     return
+                        # elif attribute_name is not None and attribute_value is None:
+                        #     print("** value missing **")
+                        #     return
+                        
+                        # if key not in storage.all():
+                        #     print("** no instance found **")
+                        #     return
+                        
+                        # if instance_id is None:
+                        #     print("** instance id missing **")
+                        #     return
+                        
+                        # attr_name = attribute_name
+                        # attr_value = attribute_value
+                        # obj = storage.all()[key]
+
+                        # try:
+                        #     attr_value = eval(attr_value)
+                        # except (NameError, SyntaxError):
+                        #     pass
+                        # setattr(obj, attr_name, attr_value)
+
+                        # else:
+                        #     print("** no instance found **")
+                        #     return
+                    elif key in storage.all():
+                        if attribute_name is None and attribute_value is None:
+                            print("** attribute name missing **")
+                            return
+                        elif attribute_name is not None and attribute_value is None:
+                            print("** value missing **")
+                            return
+                    attr_name = attribute_name
+                    attr_value = attribute_value
+                    obj = storage.all()[key]
+
+                    try:
+                        attr_value = eval(attr_value)
+                    except (NameError, SyntaxError):
+                        pass
+                    setattr(obj, attr_name, attr_value)
+                # else:
+                #     print("** invalid syntax for update **")
 
         storage.save()
        
