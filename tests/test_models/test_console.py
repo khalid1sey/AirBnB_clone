@@ -844,24 +844,11 @@ class TestHBNBCommand_update(unittest.TestCase):
             self.assertFalse(HBNBCommand().onecmd(".update()"))
             """self.assertEqual(correct, output.getvalue().strip())"""
 
-    # def test_update_invalid_class(self):
-    #     correct = "** class doesn't exist **"
-    #     with patch("sys.stdout", new=StringIO()) as output:
-    #         self.assertFalse(HBNBCommand().onecmd("update MyModel"))
-    #         self.assertEqual(correct, output.getvalue().strip())
-    #     with patch("sys.stdout", new=StringIO()) as output:
-    #         self.assertFalse(HBNBCommand().onecmd("MyModel.update()"))
-    #         self.assertEqual(correct, output.getvalue().strip())
-
     def test_update_invalid_class(self):
         correct = "** class doesn't exist **"
-        
-        # Test case 1: "update MyModel"
         with patch("sys.stdout", new=StringIO()) as output:
             self.assertFalse(HBNBCommand().onecmd("update MyModel"))
             self.assertEqual(correct, output.getvalue().strip())
-        
-        # Test case 2: "MyModel.update()"
         with patch("sys.stdout", new=StringIO()) as output:
             self.assertFalse(HBNBCommand().onecmd("MyModel.update()"))
             self.assertEqual(correct, output.getvalue().strip())
@@ -1020,21 +1007,6 @@ class TestHBNBCommand_update(unittest.TestCase):
         test_dict = storage.all()["BaseModel.{}".format(testId)].__dict__
         self.assertEqual("attr_value", test_dict["attr_name"])
 
-    def test_update_valid_string_attr_space_notation(self):
-        # Create a new BaseModel instance
-        with patch("sys.stdout", new=StringIO()) as output:
-            HBNBCommand().onecmd("create BaseModel")
-            test_id = output.getvalue().strip()
-
-        # Update the attribute 'attr_name' of the BaseModel instance
-        test_cmd = "update BaseModel {} attr_name 'attr_value'".format(test_id)
-        with patch("sys.stdout", new=StringIO()) as output:
-            self.assertFalse(HBNBCommand().onecmd(test_cmd))
-
-        # Verify that the attribute 'attr_name' is correctly updated
-        test_dict = storage.all()["BaseModel.{}".format(test_id)].__dict__
-        self.assertEqual("attr_value", test_dict.get("attr_name"))
-
         with patch("sys.stdout", new=StringIO()) as output:
             HBNBCommand().onecmd("create User")
             testId = output.getvalue().strip()
@@ -1083,31 +1055,15 @@ class TestHBNBCommand_update(unittest.TestCase):
         test_dict = storage.all()["Review.{}".format(testId)].__dict__
         self.assertTrue("attr_value", test_dict["attr_name"])
 
-    # def test_update_valid_float_attr_space_notation(self):
-    #     with patch("sys.stdout", new=StringIO()) as output:
-    #         HBNBCommand().onecmd("create Place")
-    #         testId = output.getvalue().strip()
-    #     testCmd = "update Place {} latitude 7.2".format(testId)
-    #     self.assertFalse(HBNBCommand().onecmd(testCmd))
-    #     test_dict = storage.all()["Place.{}".format(testId)].__dict__
-    #     self.assertEqual(7.2, test_dict["latitude"])
-        
     def test_update_valid_float_attr_space_notation(self):
-        # Create a new Place instance
         with patch("sys.stdout", new=StringIO()) as output:
             HBNBCommand().onecmd("create Place")
-            test_id = output.getvalue().strip()
-
-        # Update the latitude attribute of the Place instance
-        test_cmd = "update Place {} latitude 7.2".format(test_id)
-        with patch("sys.stdout", new=StringIO()) as output:
-            self.assertFalse(HBNBCommand().onecmd(test_cmd))
-
-        # Verify that the latitude attribute is correctly updated
-        test_dict = storage.all()["Place.{}".format(test_id)].__dict__
-        self.assertEqual(7.2, test_dict.get("latitude"))
-
-
+            testId = output.getvalue().strip()
+        testCmd = "update Place {} latitude 7.2".format(testId)
+        self.assertFalse(HBNBCommand().onecmd(testCmd))
+        test_dict = storage.all()["Place.{}".format(testId)].__dict__
+        self.assertEqual(7.2, test_dict["latitude"])
+        
 class TestHBNBCommand_count(unittest.TestCase):
     """Unittests for testing count method of HBNB comand interpreter."""
 

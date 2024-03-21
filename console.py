@@ -47,11 +47,10 @@ class HBNBCommand(cmd.Cmd):
     def help_EOF(self):
         """Print help for EOF command."""
         print("EOF signal to exit the program")
-        # print("EOF command to exit the program")
-
+        
     def do_create(self, arg):
         """Create instance specified by user"""
-        # print("{} {}".format("arg =", arg))
+        
         if not arg:
             print("** class name missing **")
             return
@@ -60,10 +59,6 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
             return
 
-        # check if the provided argument has a valid syntax
-        # if ".create()" in arg:
-        #     print(f"*** Unknown syntax: {arg}.create()")
-        #     return
         new_instance = eval(f"{arg}()")
         new_instance.save()
         print(new_instance.id)
@@ -135,7 +130,7 @@ class HBNBCommand(cmd.Cmd):
     def default(self, line):
         args = line.split('.', 1)
         if len(args) == 2:
-            # print("{} {}".format("args =", args))
+            
             class_name, method_arg = args
             if method_arg == 'count()':
                 self.do_count(class_name)
@@ -148,13 +143,6 @@ class HBNBCommand(cmd.Cmd):
                 # Extract the ID from between the parentheses
                 id_str = method_arg[5:-1]
                 instance_id = method_arg.split('(')[1][:-1]
-                # print("{} {}".format("id_str =", id_str))
-                # print("{} {}".format("args =", args))
-                # print("{} {}".format("class_name =", class_name))
-                # print("{} {}".format("method_name =", method_name))
-                # print("{} {}".format("instance_id =", instance_id))
-
-
             
                 arg_str = "{} {}".format(class_name, id_str)
                 self.do_show(arg_str)
@@ -170,7 +158,6 @@ class HBNBCommand(cmd.Cmd):
             elif re.match(r"(\w+)\.(\w+)\((.*)\)", line):
          
                 pattern = list(re.match(r"(\w+)\.(\w+)\((.*)\)", line).groups())
-                # print("{} {}".format("pattern =", pattern))
                 # Eliminate empty lines in the returned pattern
                 if pattern[-1] == "":
                     pattern.pop()
@@ -185,18 +172,12 @@ class HBNBCommand(cmd.Cmd):
 
                             if method == "update" and dict:
                                 dict = eval(dict)
-                                # print("{} {}".format("dict after eval=", dict))
                                 instance_id = shlex.split(pattern[2])[0].replace(",", "")
-                                # print("{} {}".format("instance_id after =", instance_id))
                                 line += f" {instance_id} {dict}"
-                                # print("{} {}".format("line at end of try block b4 onecmd =", line))
-                                # print("{} {}".format("line at end of try block after strip b4 onecmd =", line.strip()))
                                 self.onecmd(line.strip())
-                                #self.do_update(f"{class_name} {instance_id} {dict}")
                                 return
                          
                         except IndexError:
-                            #print("** instance id missing **")
                             pass
 
                         # Check if there is a list and retain it if it exists
@@ -220,24 +201,17 @@ class HBNBCommand(cmd.Cmd):
 
     def do_all(self, arg):
         """Prints all string representation of all instances based or not on the class name"""
-        # print("Inside do_all")
         args = shlex.split(arg)
-        # print("{} {}".format("arg =", arg))
-        # print("{} {}".format("args =", args))
-       
 
         objects = storage.all()
         if args:
             class_name = args[0]
-            # print("{} {}".format("class_name =", class_name))
             if class_name not in self.valid_classes:
                 print("** class doesn't exist **")
             else:
                 for obj in objects.values():
                     if type(obj) is self.valid_classes[class_name]:
                         print(str(obj))
-                    # else:
-                    #     print("** class doesn't exist **")
         else:
             print(str([str(obj) for obj in objects.values()]))
        
@@ -250,19 +224,14 @@ class HBNBCommand(cmd.Cmd):
             
             pattr = r'(\w+)?\s?([\da-f-]+)?\s?({.*})?'
             match1 = re.match(pattr, arg)
-            # print("{} {}".format("match1 in do_update =", match1))
             if match1:
                 class_name = match1.group(1)
-                # method = match1.group(2)
                 instance_id = match1.group(2)
                 dictionary_representation = match1.group(3)
 
                 key = "{}.{}".format(class_name, instance_id)
                 if key not in storage.all():
 
-                    # print("** no instance found **")
-                    # return
-                
                     if class_name is None:
                         print("** class name missing **")
                         return
@@ -278,29 +247,15 @@ class HBNBCommand(cmd.Cmd):
                     if instance_id not in storage.all():
                         print("** no instance found **")
                         return
-                # key = "{}.{}".format(class_name, instance_id)
+                    
                 obj = storage.all()[key]
-                # if key not in storage.all():
-                #     print("** no instance found **")
-                #     return
-                
-                # if instance_id is None:
-                #     print("** instance id missing **")
-                #     return
-
                 dict = re.findall(r"\{.*?\}", arg)
                 
-                # args = shlex.split(arg)
-                # # print("{} {}".format("args in do_update =", args))
-                # models = storage.all()
-                
                 if dict:
-                    # print("{} {}".format("dict before try block =", dict))
                     dictionary_string = dict[0].strip("'")
                     try:
                         
                         dict_repr = ast.literal_eval(dictionary_string)
-                        # print("{} {}".format("dict_repr before exception =", dict_repr))
                     except (ValueError, SyntaxError):
                         print("** invalid dictionary representation **")
                         return
@@ -309,16 +264,8 @@ class HBNBCommand(cmd.Cmd):
                     for attr_name, attr_value in dict_repr.items():
                         setattr(obj, attr_name, attr_value)
         else:
-            # print("{} {}".format("arg in do_update =", arg))
             patt = r'(\w+)\("([\da-f-]+)"(?:, "(\w+)")?(?:, "(\w+)")?\)'
-            # patt2 = r'(\w+\s?)?([\da-f-]+\s?)?(\w+\s?)?"([^"]*)"?'
-            # patt2 = r'(\w+)?\s?([\da-f-]+)?\s?(\w+)?\s?("([^"]*)")?'
-            # patt2 = r'(\w+)?\s?([\da-f-]+)?\s?(\w+)?\s?([\d\.]+)?'
-            # patt2 = r'(\w+)?\s?([\da-f-]+)?\s?(\w+)?\s?((\d+\.?\d*)|(\d*\.?\d+)|"([^"]*)")?'
-            # patt2 = r"(\w+)?\s?([\da-f-]+)?\s?(\w+)?\s?((\d+\.?\d*)|(\d*\.?\d+)|"([^"]*)"|'([^']*)')?"
-            patt2 = r"(\w+)?\s?([\da-f-]+)?\s?(\w+)?\s?((\d+\.?\d*)|(\d*\.?\d+)|\"([^\"]*)\"|'([^']*)')?"
-            # patt2 = r'(\w+\s*)?([\da-f-]+\s*)?(\w+\s*)?"([^"]*)"?'
-            # patt2 = r'(\w+)?\s?([\da-f-]+)?\s?(\w+)?\s?"([^"]*)"?'    
+            patt2 = r"(\w+)?\s?([\da-f-]+)?\s?(\w+)?\s?((\d+\.?\d*)|(\d*\.?\d+)|\"([^\"]*)\"|'([^']*)')?"   
             mach = re.match(patt, arg)
             mach2 = re.match(patt2, arg)
             
@@ -329,16 +276,9 @@ class HBNBCommand(cmd.Cmd):
                 attribute_name = mach.group(3)
                 attribute_value = mach.group(4)
                 
-                # print("Class Name:", class_name)
-                # print("Instance ID:", instance_id)
-                # print("attribute_name:", attribute_name)
-                # print("attribute_value:", attribute_value)
-                
                 key = "{}.{}".format(class_name, instance_id)
                 if key not in storage.all():
-                    
-                    # obj = storage.all()[key]
-
+             
                     if class_name is None:
                         print("** class name missing **")
                         return
@@ -366,24 +306,6 @@ class HBNBCommand(cmd.Cmd):
                 attr_name = attribute_name
                 attr_value = attribute_value
                 obj = storage.all()[key]
-                    
-                    # if attribute_name is None and attribute_value is None:
-                    #     print("** attribute name missing **")
-                    #     return
-                    # elif attribute_name is not None and attribute_value is None:
-                    #     print("** value missing **")
-                    #     return
-                    
-                    # if key not in storage.all():
-                    #     print("** no instance found **")
-                    #     return
-                    
-                    # if instance_id is None:
-                    #     ("** instance id missing **")
-                    #     return
-                    
-                    # attr_name = attribute_name
-                    # attr_value = attribute_value
 
                 try:
                     attr_value = eval(attr_value)
@@ -393,21 +315,13 @@ class HBNBCommand(cmd.Cmd):
             else:
                 if mach2:
                     list_mach = list(mach2.groups())
-                    # print("{} {}".format("list_mach =", list_mach))
-                    # print("{} {}".format("len(list_mach) =", len(list_mach)))
                     
                     class_name = mach2.group(1)
                     instance_id = mach2.group(2)
                     attribute_name = mach2.group(3)
                     attribute_value = mach2.group(4)
                     
-                    # print("Class Name:", class_name)
-                    # print("Instance ID:", instance_id)
-                    # print("attribute_name:", attribute_name)
-                    # print("attribute_value:", attribute_value)
-                    
                     key = "{}.{}".format(class_name, instance_id)
-                    # print("{} {}".format("key =", key))
                     if key not in storage.all():
 
                         if class_name is None:
@@ -426,34 +340,6 @@ class HBNBCommand(cmd.Cmd):
                             print("** no instance found **")
                             return
                     
-                        # if attribute_name is None and attribute_value is None:
-                        #     print("** attribute name missing **")
-                        #     return
-                        # elif attribute_name is not None and attribute_value is None:
-                        #     print("** value missing **")
-                        #     return
-                        
-                        # if key not in storage.all():
-                        #     print("** no instance found **")
-                        #     return
-                        
-                        # if instance_id is None:
-                        #     print("** instance id missing **")
-                        #     return
-                        
-                        # attr_name = attribute_name
-                        # attr_value = attribute_value
-                        # obj = storage.all()[key]
-
-                        # try:
-                        #     attr_value = eval(attr_value)
-                        # except (NameError, SyntaxError):
-                        #     pass
-                        # setattr(obj, attr_name, attr_value)
-
-                        # else:
-                        #     print("** no instance found **")
-                        #     return
                     elif key in storage.all():
                         if attribute_name is None and attribute_value is None:
                             print("** attribute name missing **")
@@ -470,9 +356,7 @@ class HBNBCommand(cmd.Cmd):
                     except (NameError, SyntaxError):
                         pass
                     setattr(obj, attr_name, attr_value)
-                # else:
-                #     print("** invalid syntax for update **")
-
+               
         storage.save()
        
 if __name__ == '__main__':
