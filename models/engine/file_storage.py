@@ -49,11 +49,6 @@ class FileStorage:
                     else:
                         class_obj = globals()[class_name]
 
-                    #if class_obj is not None:
-                        #self.__objects[key] = class_obj(**value)
-                    #else:
-                        #pass
-                    #class_obj = globals()[class_name]
                     self.__objects[key] = class_obj(**value)
         except FileNotFoundError:
             pass
