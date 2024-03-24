@@ -39,7 +39,7 @@ class BaseModel:
         display the string representation of created objects
         """
         cls_name = self.__class__.__name__
-        return "[{}] ({}) {}".format(cls_name.__name__, self.id, self.__dict__)
+        return "[{}] ({}) {}".format(cls_name, self.id, self.__dict__)
 
     def save(self):
         """
