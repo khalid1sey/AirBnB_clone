@@ -15,6 +15,15 @@ class FileStorage:
     """
     __file_path = "file.json"
     __objects = {}
+    valid_classes = {
+        "BaseModel": BaseModel,
+        "User": User,
+        "State": State,
+        "City": City,
+        "Amenity": Amenity,
+        "Place": Place,
+        "Review": Review,
+    }
 
     def all(self):
         """Returns the dictionary __objects."""
@@ -29,10 +38,11 @@ class FileStorage:
         """Serializes __objects to the JSON file (path: __file_path)."""
         serialized_objects = {}
         for key, obj in self.__objects.items():
+            if key != f"{obj.__class__.__name__}.{obj.id}":
+                raise KeyError("invalid key. key must be <class name>.<id>")
             serialized_objects[key] = obj.to_dict()
         with open(self.__file_path, 'w') as file:
             json.dump(serialized_objects, file)
-        # print("File path in FileStorage: ", self.__file_path)
 
     def reload(self):
         """
@@ -45,21 +55,10 @@ class FileStorage:
             with open(self.__file_path, 'r') as file:
                 data = json.load(file)
                 for key, value in data.items():
-                    if '.' in key:
-                        class_name, obj_id = key.split('.')
-                    else:
-                        # If key does not contain a period, use the whole key as class_name
-                        class_name = key
-                        obj_id = value.get('id')
-                    class_obj = None
-                    if class_name == 'BaseModel':
-                        class_obj = BaseModel
-                    elif class_name == 'User':
-                        class_obj = User
-                    else:
-                        class_obj = globals()[class_name]
-
-                    self.__objects[key] = class_obj(**value)
-    
+                    class_name = value["__class__"]
+                    self.__objects[key] = self.valid_classes[class_name](
+                        **value
+                    )
         except FileNotFoundError:
             pass
+  
