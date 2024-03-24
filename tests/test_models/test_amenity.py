@@ -111,22 +111,6 @@ class TestAmenity_save(unittest.TestCase):
         first_updated_at = am.updated_at
         am.save()
         self.assertLess(first_updated_at, am.updated_at)
-    # def test_one_save(self):
-    #     am = Amenity()
-        
-    #     # Get the initial updated_at value
-    #     initial_updated_at = am.updated_at
-
-    #     # Mock datetime.now() to return a fixed time in the future
-    #     future_time = datetime.now() + timedelta(seconds=1)
-    #     with unittest.patch('datetime.datetime') as mock_datetime:
-    #         mock_datetime.now.return_value = future_time
-            
-    #         # Call save method
-    #         am.save()
-
-    #     # Assert that updated_at has changed
-    #     self.assertNotEqual(initial_updated_at, am.updated_at)
 
     def test_two_saves(self):
         am = Amenity()
