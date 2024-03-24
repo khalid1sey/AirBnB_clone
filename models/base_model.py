@@ -8,6 +8,7 @@ import uuid
 from datetime import datetime
 import models
 
+
 class BaseModel:
     """
     class BaseModel that defines all common
@@ -20,11 +21,13 @@ class BaseModel:
         """
         if kwargs:
             for key, value in kwargs.items():
-                    if key == 'created_at' or key == 'updated_at':
-                        setattr(self, key, datetime.strptime(value, '%Y-%m-%dT%H:%M:%S.%f'))
-                    else:
-                        if key != '__class__':
-                            setattr(self, key, value)
+                if key == 'created_at' or key == 'updated_at':
+                    date_format = '%Y-%m-%dT%H:%M:%S.%f'
+                    parsed_date = datetime.strptime(value, date_format)
+                    setattr(self, key, parsed_date)
+                else:
+                    if key != '__class__':
+                        setattr(self, key, value)
         else:
             self.id = str(uuid.uuid4())
             self.created_at = datetime.now()
@@ -35,18 +38,21 @@ class BaseModel:
         """
         display the string representation of created objects
         """
-        return "[{}] ({}) {}".format(self.__class__.__name__, self.id, self.__dict__)
+        cls_name = self.__class__.__name__
+        return "[{}] ({}) {}".format(cls_name.__name__, self.id, self.__dict__)
 
     def save(self):
         """
-        updates the public instance attribute updated_at with the current datetime and saves to storage
+        updates the public instance attribute updated_at \
+            with the current datetime and saves to storage
         """
         self.updated_at = datetime.now()
         models.storage.save()
-        
+
     def to_dict(self):
         """
-        returns a dictionary containing all keys/values of __dict__ of the instance
+        returns a dictionary containing all keys/values \
+            of __dict__ of the instance
         """
         instance_dict = self.__dict__.copy()
         instance_dict['__class__'] = self.__class__.__name__

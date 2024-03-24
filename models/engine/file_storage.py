@@ -1,15 +1,17 @@
 import json
 from models.base_model import BaseModel  # Import BaseModel
-from models.user import User #Import User class
-from models.place import Place #Import the Place class
-from models.state import State #Import the State class
-from models.city import City #Import the City class
-from models.amenity import Amenity #Import the Amenity class
-from models.review import Review #Import the Review class
+from models.user import User  # Import User class
+from models.place import Place  # Import the Place class
+from models.state import State  # Import the State class
+from models.city import City  # Import the City class
+from models.amenity import Amenity  # Import the Amenity class
+from models.review import Review  # Import the Review class
+
 
 class FileStorage:
     """
-    Serializes instances to a JSON file and deserializes JSON file to instances.
+    Serializes instances to a JSON file \
+            and deserializes JSON file to instances.
     """
     __file_path = "file.json"
     __objects = {}
@@ -33,8 +35,10 @@ class FileStorage:
 
     def reload(self):
         """
-        Deserializes the JSON file to __objects (only if the JSON file (__file_path) exists;
-        otherwise, do nothing. If the file doesn’t exist, no exception should be raised).
+        Deserializes the JSON file to __objects \
+                (only if the JSON file (__file_path) exists;
+        otherwise, do nothing. If the file doesn’t \
+                exist, no exception should be raised).
         """
         try:
             with open(self.__file_path, 'r') as file:

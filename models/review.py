@@ -6,6 +6,7 @@ BaseModel
 
 from models.base_model import BaseModel
 
+
 class Review(BaseModel):
     """
     class Amenity that inherits from

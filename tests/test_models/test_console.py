@@ -22,6 +22,7 @@ from console import HBNBCommand
 from io import StringIO
 from unittest.mock import patch
 
+
 class TestHBNBCommand_help(unittest.TestCase):
     """Unittests for testing help messages of the HBNB command interpreter."""
     def test_help_quit(self):
@@ -1063,7 +1064,8 @@ class TestHBNBCommand_update(unittest.TestCase):
         self.assertFalse(HBNBCommand().onecmd(testCmd))
         test_dict = storage.all()["Place.{}".format(testId)].__dict__
         self.assertEqual(7.2, test_dict["latitude"])
-        
+
+
 class TestHBNBCommand_count(unittest.TestCase):
     """Unittests for testing count method of HBNB comand interpreter."""
 
@@ -1127,6 +1129,7 @@ class TestHBNBCommand_count(unittest.TestCase):
         with patch("sys.stdout", new=StringIO()) as output:
             self.assertFalse(HBNBCommand().onecmd("Review.count()"))
             self.assertEqual("1", output.getvalue().strip())
+
 
 if __name__ == "__main__":
     unittest.main()
