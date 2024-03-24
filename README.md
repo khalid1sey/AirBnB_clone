@@ -212,6 +212,9 @@ To use the command interpreter, follow the instructions below.
    - **all**: Prints the string representation of all instances based on the class name. Usage: `all [class name]`.
    - **update**: Updates an instance based on the class name and ID by adding or updating an attribute. Usage: `update <class name> <id> <attribute name> "<attribute value>"`.
    - **quit**: Exits the command interpreter.
+4. Unittest 
+  - non-interactive mode:  echo "python3 -m unittest discover tests" | bash
+  - interactive mode : python3 -m unittest tests
 
 ### Examples
 
