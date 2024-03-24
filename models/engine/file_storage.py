@@ -32,6 +32,7 @@ class FileStorage:
             serialized_objects[key] = obj.to_dict()
         with open(self.__file_path, 'w') as file:
             json.dump(serialized_objects, file)
+        # print("File path in FileStorage: ", self.__file_path)
 
     def reload(self):
         """
@@ -44,7 +45,12 @@ class FileStorage:
             with open(self.__file_path, 'r') as file:
                 data = json.load(file)
                 for key, value in data.items():
-                    class_name, obj_id = key.split('.')
+                    if '.' in key:
+                        class_name, obj_id = key.split('.')
+                    else:
+                        # If key does not contain a period, use the whole key as class_name
+                        class_name = key
+                        obj_id = value.get('id')
                     class_obj = None
                     if class_name == 'BaseModel':
                         class_obj = BaseModel
@@ -54,5 +60,6 @@ class FileStorage:
                         class_obj = globals()[class_name]
 
                     self.__objects[key] = class_obj(**value)
+    
         except FileNotFoundError:
             pass

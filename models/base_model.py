@@ -23,15 +23,20 @@ class BaseModel:
             for key, value in kwargs.items():
                 if key == 'created_at' or key == 'updated_at':
                     date_format = '%Y-%m-%dT%H:%M:%S.%f'
-                    parsed_date = datetime.strptime(value, date_format)
+                    try:
+                        parsed_date = datetime.strptime(value, date_format)
+                    except ValueError:
+                                    raise ValueError("Invalid isoformat string")
+                    # parsed_date = datetime.strptime(value, date_format)
                     setattr(self, key, parsed_date)
                 else:
                     if key != '__class__':
                         setattr(self, key, value)
         else:
+            current_time = datetime.now()
             self.id = str(uuid.uuid4())
-            self.created_at = datetime.now()
-            self.updated_at = datetime.now()
+            self.created_at = current_time
+            self.updated_at = current_time
             models.storage.new(self)
 
     def __str__(self):
@@ -41,13 +46,15 @@ class BaseModel:
         cls_name = self.__class__.__name__
         return "[{}] ({}) {}".format(cls_name, self.id, self.__dict__)
 
-    def save(self):
+    def save(self) -> None:
         """
         updates the public instance attribute updated_at \
             with the current datetime and saves to storage
         """
         self.updated_at = datetime.now()
+        # from models import storage  # Import here to avoid circular import
         models.storage.save()
+        # storage.save()
 
     def to_dict(self):
         """
