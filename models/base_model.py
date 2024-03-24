@@ -26,8 +26,8 @@ class BaseModel:
                     try:
                         parsed_date = datetime.strptime(value, date_format)
                     except ValueError:
-                                    raise ValueError("Invalid isoformat string")
-                    # parsed_date = datetime.strptime(value, date_format)
+                        raise ValueError("Invalid isoformat string")
+                    parsed_date = datetime.strptime(value, date_format)
                     setattr(self, key, parsed_date)
                 else:
                     if key != '__class__':

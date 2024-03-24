@@ -38,8 +38,8 @@ class FileStorage:
         """Serializes __objects to the JSON file (path: __file_path)."""
         serialized_objects = {}
         for key, obj in self.__objects.items():
-            if key != f"{obj.__class__.__name__}.{obj.id}":
-                raise KeyError("invalid key. key must be <class name>.<id>")
+            # if key != f"{obj.__class__.__name__}.{obj.id}":
+            #     raise KeyError("invalid key. key must be <class name>.<id>")
             serialized_objects[key] = obj.to_dict()
         with open(self.__file_path, 'w') as file:
             json.dump(serialized_objects, file)
