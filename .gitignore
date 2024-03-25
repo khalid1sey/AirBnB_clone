@@ -6,3 +6,5 @@ console9.py
 console10.py
 lazy_methods.py
 pear/
+*.pyc
+__pycache__/
