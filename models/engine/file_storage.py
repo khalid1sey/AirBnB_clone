@@ -59,5 +59,5 @@ class FileStorage:
                     self.__objects[key] = self.valid_classes[class_name](
                         **value
                     )
-        except (FileNotFoundError):
+        except (FileNotFoundError, PermissionError):
             pass
