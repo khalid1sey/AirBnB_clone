@@ -304,3 +304,7 @@ class TestSaveMethod(unittest.TestCase):
         """Tests passing an argument to the save method. Expects TypeError."""
         with self.assertRaises(TypeError):
             self.base1.save(self.base1)
+
+
+if __name__ == "__main__":
+    unittest.main()
