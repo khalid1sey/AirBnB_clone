@@ -241,6 +241,11 @@ class HBNBCommand(cmd.Cmd):
                 dictionary_representation = match1.group(3)
 
                 key = "{}.{}".format(class_name, instance_id)
+                # print("{} {}".format("class_name =", class_name))
+                # print("{} {}".format("instance_id =", instance_id))
+                # print("{} {}".format("dictionary_representation =",\
+                # dictionary_representation))
+                # print("{} {}".format("key =", key))
                 if key not in storage.all():
 
                     if class_name is None:
@@ -251,9 +256,9 @@ class HBNBCommand(cmd.Cmd):
                         print("** class doesn't exist **")
                         return
 
-                    if class_name and instance_id is None:
-                        print("** instance id missing **")
-                        return
+                    # if class_name and instance_id is None:
+                    #     print("** instance id missing **")
+                    #     return
 
                     if instance_id not in storage.all():
                         print("** no instance found **")
