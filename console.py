@@ -304,9 +304,9 @@ class HBNBCommand(cmd.Cmd):
                         print("** class doesn't exist **")
                         return
 
-                    if class_name and instance_id is None:
-                        print("** instance id missing **")
-                        return
+                    # if class_name and instance_id is None:
+                    #     print("** instance id missing **")
+                    #     return
 
                     if instance_id not in storage.all():
                         print("** no instance found **")
