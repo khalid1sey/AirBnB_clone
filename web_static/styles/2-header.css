@@ -1,0 +1,9 @@
+header {
+    background-color: #FF0000;
+    height: 70px;
+    width: 100%;
+    position: relative;
+    top: 0;
+
+    background-image: url('path/to/your/image.jpg');
+}
